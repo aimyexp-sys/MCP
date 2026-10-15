@@ -227,6 +227,7 @@ MCP/
 │   ├── package.json
 │   ├── index.html
 │   └── src/                    # main.js, style.css
+│   └── render.yaml             # Render Blueprint deployment specification
 │
 ├── job-portal-server/          # Job Portal backend (Port 4000)
 │   ├── .gitignore
@@ -247,10 +248,46 @@ MCP/
     ├── test-mcp.js             # Automated verification test suite
     ├── README.md               # Dedicated MCP specifications
     └── src/
-        ├── index.js            # Stdio transport entrypoint
+        ├── index.js            # Stdio transport entrypoint (local)
+        ├── sse.js              # HTTP / SSE transport entrypoint (Render / Cloud)
         ├── server.js           # Tool registration
         ├── dataProvider.js     # Live sync & smart search engine
         └── tools/
             ├── studentsTool.js # get_students schema & handler
             └── jobsTool.js     # get_jobs schema & handler
 ```
+
+---
+
+## 🌐 Deploying to Render
+
+This repository includes a ready-to-use **Render Blueprint** (`render.yaml`) that configures and deploys all 5 services automatically:
+
+1. **`students-server`**: Web Service (`node server.js`)
+2. **`students-portal`**: Static Site (`dist`)
+3. **`job-portal-server`**: Web Service (`node server.js`)
+4. **`job-portal-web`**: Static Site (`dist`)
+5. **`exp-portal-mcp-server`**: Web Service (`npm run start:sse`)
+
+### Method 1: Automatic Deployment via Render Blueprint (Recommended)
+
+1. Log into your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** > **Blueprint**.
+3. Connect your GitHub repository: `https://github.com/aimyexp-sys/MCP`.
+4. Render will detect `render.yaml` and automatically configure all 5 services with their build commands, publish directories, and environment variables.
+5. Click **Apply**. Render will build and deploy all services simultaneously.
+
+### Method 2: Connecting Claude Desktop to Deployed Render MCP
+
+Once deployed, your MCP server runs on HTTP / Server-Sent Events (SSE). You can connect to it remotely from anywhere:
+
+```json
+{
+  "mcpServers": {
+    "exp_portal-mcp-server": {
+      "url": "https://exp-portal-mcp-server.onrender.com/sse"
+    }
+  }
+}
+```
+*(Replace `https://exp-portal-mcp-server.onrender.com` with your actual Render service URL).*

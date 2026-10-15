@@ -9,10 +9,13 @@
   },
   "scripts": {
     "start": "node src/index.js",
+    "start:sse": "node src/sse.js",
     "test:tools": "node test-mcp.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
     "zod": "^3.24.2"
   }
 }

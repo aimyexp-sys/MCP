@@ -14,9 +14,12 @@ let cachedStudents = null;
 let cachedTechStacks = null;
 let cachedJobs = null;
 
+const STUDENTS_API_URL = process.env.STUDENTS_API_URL || "http://localhost:3000/api/students";
+const JOBS_API_URL = process.env.JOBS_API_URL || "http://localhost:4000/api/jobs";
+
 /**
  * Load student records.
- * First tries to fetch live data from the running Student API (http://localhost:3000/api/students)
+ * First tries to fetch live data from the running Student API (STUDENTS_API_URL)
  * to ensure 100% real-time synchronization with the Web Portal.
  * Falls back to the local data snapshot if the server is not active.
  */
@@ -24,7 +27,7 @@ export async function getStudentsData() {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
-    const res = await fetch("http://localhost:3000/api/students", { signal: controller.signal });
+    const res = await fetch(STUDENTS_API_URL, { signal: controller.signal });
     clearTimeout(timeoutId);
     if (res.ok) {
       const json = await res.json();
@@ -48,14 +51,14 @@ export async function getStudentsData() {
 
 /**
  * Load job vacancies.
- * First tries to fetch live data from the running Job Portal API (http://localhost:4000/api/jobs)
+ * First tries to fetch live data from the running Job Portal API (JOBS_API_URL)
  * with graceful fallback to the local file.
  */
 export async function getJobsData() {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
-    const res = await fetch("http://localhost:4000/api/jobs", { signal: controller.signal });
+    const res = await fetch(JOBS_API_URL, { signal: controller.signal });
     clearTimeout(timeoutId);
     if (res.ok) {
       const json = await res.json();

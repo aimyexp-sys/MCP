@@ -64,13 +64,16 @@ export default function App() {
   useEffect(() => {
     async function fetchJobs() {
       setLoading(true);
+      let API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000/api' : '/api');
+      if (!API_BASE.startsWith('http') && !API_BASE.startsWith('/')) API_BASE = `https://${API_BASE}`;
+      if (!API_BASE.endsWith('/api') && API_BASE.startsWith('http')) API_BASE = `${API_BASE.replace(/\/$/, '')}/api`;
       try {
-        // Try proxy or direct localhost:4000
-        const res = await fetch('/api/jobs');
+        const res = await fetch(`${API_BASE}/jobs`);
         if (res.ok) {
           const data = await res.json();
-          if (data && data.data && data.data.length > 0) {
-            setJobs(data.data);
+          const jobList = Array.isArray(data) ? data : (data && data.data);
+          if (jobList && jobList.length > 0) {
+            setJobs(jobList);
             setApiConnected(true);
             setLoading(false);
             return;
