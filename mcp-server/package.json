@@ -1,0 +1,18 @@
+{
+  "name": "exp_portal-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server unifying Student Portal Directory and Job Vacancies Portal",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "exp_portal-mcp-server": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test:tools": "node test-mcp.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.24.2"
+  }
+}

@@ -1,0 +1,3461 @@
+[
+  {
+    "id": 1,
+    "name": "Aarav Garg",
+    "email": "aarav885@outlook.com",
+    "mobile": "+91 8871889971",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Axios / Fetch API",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Mongoose ORM",
+          "React Router v6",
+          "JWT Authentication"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 2,
+    "name": "Aditi Das",
+    "email": "aditi@outlook.com",
+    "mobile": "+91 9075466582",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Google Play Store Deployment",
+          "Retrofit & OkHttp",
+          "Room Database",
+          "Hilt Dependency Injection",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Firebase (Auth, Firestore, FCM)"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Express.js – REST API, Middleware, Authentication",
+          "Axios / Fetch API",
+          "Docker & Deployment (Vercel / Render)",
+          "React.js – Hooks, Context API, Redux"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 3,
+    "name": "Aditya Tiwari",
+    "email": "aditya990@yahoo.com",
+    "mobile": "+91 9283518142",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Swift – Optionals, Protocols, Closures",
+          "SwiftUI – Views, State, Combine",
+          "UIKit – Storyboards, Auto Layout",
+          "TestFlight & App Store Connect"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Room Database",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Google Play Store Deployment",
+          "Hilt Dependency Injection",
+          "Material Design 3",
+          "Firebase (Auth, Firestore, FCM)"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 4,
+    "name": "Akash Malhotra",
+    "email": "akash@hotmail.com",
+    "mobile": "+91 8245381933",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "Android SDK – Activities, Fragments, Intents",
+          "Google Play Store Deployment",
+          "Material Design 3",
+          "Room Database"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 5,
+    "name": "Amit Gupta",
+    "email": "amit171@protonmail.com",
+    "mobile": "+91 7786950113",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Room Database",
+          "MVVM Architecture",
+          "Firebase (Auth, Firestore, FCM)",
+          "Android SDK – Activities, Fragments, Intents",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Node.js – Event Loop, Streams, Clustering",
+          "React.js – Hooks, Context API, Redux",
+          "Axios / Fetch API",
+          "Express.js – REST API, Middleware, Authentication",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Socket.IO",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "UIKit – Storyboards, Auto Layout",
+          "Swift – Optionals, Protocols, Closures",
+          "TestFlight & App Store Connect",
+          "URLSession & Alamofire",
+          "Xcode Instruments & Profiling",
+          "Push Notifications (APNs)",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 6,
+    "name": "Amrita Mishra",
+    "email": "amrita@outlook.com",
+    "mobile": "+91 7212398781",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Django – MVT, ORM, REST Framework",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Python Core – OOP, Decorators, Generators",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "PostgreSQL / MySQL"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 7,
+    "name": "Ananya Pandey",
+    "email": "ananya@hotmail.com",
+    "mobile": "+91 6732358836",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture",
+          "Nginx Reverse Proxy",
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud",
+          "JWT & OAuth2"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "JWT Authentication",
+          "Socket.IO",
+          "Docker & Deployment (Vercel / Render)",
+          "MongoDB – Schema design, Aggregation, Indexing"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 8,
+    "name": "Anil Srivastava",
+    "email": "anil510@protonmail.com",
+    "mobile": "+91 9920054989",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Room Database",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Google Play Store Deployment",
+          "Android SDK – Activities, Fragments, Intents"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 9,
+    "name": "Anjali Chopra",
+    "email": "anjali946@gmail.com",
+    "mobile": "+91 7402182601",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "PostgreSQL / MySQL",
+          "Pandas & NumPy",
+          "Celery & Redis Task Queue",
+          "Django – MVT, ORM, REST Framework",
+          "Scikit-learn Basics",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "SQLAlchemy & Alembic Migrations"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 10,
+    "name": "Ankit Iyer",
+    "email": "ankit615@icloud.com",
+    "mobile": "+91 9408631692",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Nginx Reverse Proxy",
+          "Angular – Components, Services, RxJS",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Node.js – Event-driven architecture",
+          "JWT & OAuth2"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2027
+  },
+  {
+    "id": 11,
+    "name": "Anushka Malhotra",
+    "email": "anushka@gmail.com",
+    "mobile": "+91 7507129521",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "Mongoose ORM",
+          "Socket.IO",
+          "React Router v6",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Node.js – Event-driven architecture",
+          "Mongoose ORM",
+          "NgRx State Management",
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud",
+          "JWT & OAuth2",
+          "TypeScript"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "PostgreSQL / MySQL",
+          "Celery & Redis Task Queue",
+          "Django – MVT, ORM, REST Framework",
+          "Docker & Gunicorn Deployment",
+          "Pandas & NumPy",
+          "Python Core – OOP, Decorators, Generators",
+          "Scikit-learn Basics"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 12,
+    "name": "Arjun Joshi",
+    "email": "arjun321@hotmail.com",
+    "mobile": "+91 9485082978",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Docker & Gunicorn Deployment",
+          "Django – MVT, ORM, REST Framework",
+          "SQLAlchemy & Alembic Migrations"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout",
+          "Xcode Instruments & Profiling",
+          "URLSession & Alamofire",
+          "MVVM-C Architecture",
+          "Push Notifications (APNs)"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 13,
+    "name": "Aryan Chatterjee",
+    "email": "aryan@hotmail.com",
+    "mobile": "+91 6140408703",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "NgRx State Management",
+          "JWT & OAuth2",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Android SDK – Activities, Fragments, Intents",
+          "MVVM Architecture",
+          "Firebase (Auth, Firestore, FCM)",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 14,
+    "name": "Ashish Jain",
+    "email": "ashish@rediffmail.com",
+    "mobile": "+91 7749790680",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "Core Data",
+          "URLSession & Alamofire",
+          "UIKit – Storyboards, Auto Layout"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Socket.IO",
+          "Node.js – Event Loop, Streams, Clustering",
+          "React Router v6",
+          "React.js – Hooks, Context API, Redux",
+          "Docker & Deployment (Vercel / Render)",
+          "Express.js – REST API, Middleware, Authentication"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Room Database",
+          "Hilt Dependency Injection",
+          "Retrofit & OkHttp",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 15,
+    "name": "Bhavna Chatterjee",
+    "email": "bhavna358@rediffmail.com",
+    "mobile": "+91 6303594417",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "UIKit – Storyboards, Auto Layout",
+          "Push Notifications (APNs)",
+          "URLSession & Alamofire",
+          "SwiftUI – Views, State, Combine",
+          "Combine Framework",
+          "Swift – Optionals, Protocols, Closures"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 16,
+    "name": "Chandan Rao",
+    "email": "chandan862@rediffmail.com",
+    "mobile": "+91 7158376660",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React Router v6",
+          "Docker & Deployment (Vercel / Render)",
+          "Mongoose ORM",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Axios / Fetch API"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Mongoose ORM",
+          "NgRx State Management",
+          "Nginx Reverse Proxy",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "FastAPI – Pydantic, Async Endpoints",
+          "PostgreSQL / MySQL",
+          "Scikit-learn Basics"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 17,
+    "name": "Deepa Gupta",
+    "email": "deepa@yahoo.com",
+    "mobile": "+91 6154316307",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "URLSession & Alamofire",
+          "SwiftUI – Views, State, Combine",
+          "Core Data",
+          "MVVM-C Architecture"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Pandas & NumPy",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "SQLAlchemy & Alembic Migrations"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 18,
+    "name": "Deepak Sharma",
+    "email": "deepak@outlook.com",
+    "mobile": "+91 6831443144",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "MVVM Architecture",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Material Design 3",
+          "Room Database",
+          "Firebase (Auth, Firestore, FCM)",
+          "Android SDK – Activities, Fragments, Intents",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Xcode Instruments & Profiling",
+          "UIKit – Storyboards, Auto Layout",
+          "Swift – Optionals, Protocols, Closures",
+          "Combine Framework",
+          "Push Notifications (APNs)",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 19,
+    "name": "Dhruv Tiwari",
+    "email": "dhruv102@gmail.com",
+    "mobile": "+91 8850149543",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "UIKit – Storyboards, Auto Layout",
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures",
+          "URLSession & Alamofire",
+          "Combine Framework",
+          "Push Notifications (APNs)"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Socket.IO",
+          "Axios / Fetch API",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "Mongoose ORM",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 20,
+    "name": "Divya Jain",
+    "email": "divya745@rediffmail.com",
+    "mobile": "+91 6568450485",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "Room Database",
+          "Hilt Dependency Injection",
+          "MVVM Architecture",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Android SDK – Activities, Fragments, Intents",
+          "Material Design 3"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 21,
+    "name": "Gaurav Gupta",
+    "email": "gaurav862@yahoo.com",
+    "mobile": "+91 9222337719",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Google Play Store Deployment",
+          "Android SDK – Activities, Fragments, Intents",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "MVVM Architecture",
+          "Retrofit & OkHttp",
+          "Room Database"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Socket.IO",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2027
+  },
+  {
+    "id": 22,
+    "name": "Harish Rao",
+    "email": "harish675@icloud.com",
+    "mobile": "+91 6889595681",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Express.js – REST API, CORS, Rate Limiting",
+          "NgRx State Management",
+          "Angular – Components, Services, RxJS",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Angular Material UI",
+          "Nginx Reverse Proxy",
+          "JWT & OAuth2"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Swift – Optionals, Protocols, Closures",
+          "SwiftUI – Views, State, Combine",
+          "UIKit – Storyboards, Auto Layout",
+          "Xcode Instruments & Profiling"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 23,
+    "name": "Harsha Verma",
+    "email": "harsha@rediffmail.com",
+    "mobile": "+91 7785248087",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "JWT & OAuth2",
+          "Nginx Reverse Proxy",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "MVVM Architecture",
+          "Android SDK – Activities, Fragments, Intents",
+          "Firebase (Auth, Firestore, FCM)",
+          "Retrofit & OkHttp",
+          "Material Design 3",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Axios / Fetch API",
+          "Mongoose ORM",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 24,
+    "name": "Ishaan Patel",
+    "email": "ishaan848@hotmail.com",
+    "mobile": "+91 7503149596",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Docker & Deployment (Vercel / Render)",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Mongoose ORM",
+          "React Router v6"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "TypeScript",
+          "JWT & OAuth2",
+          "Node.js – Event-driven architecture",
+          "Angular – Components, Services, RxJS",
+          "Nginx Reverse Proxy",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "PostgreSQL / MySQL",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Django – MVT, ORM, REST Framework",
+          "Scikit-learn Basics",
+          "SQLAlchemy & Alembic Migrations",
+          "Flask – Blueprints, Jinja2, WTForms"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 25,
+    "name": "Ishita Garg",
+    "email": "ishita@yahoo.com",
+    "mobile": "+91 7470763089",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Docker & Deployment (Vercel / Render)",
+          "JWT Authentication",
+          "Axios / Fetch API",
+          "Socket.IO",
+          "React.js – Hooks, Context API, Redux",
+          "MongoDB – Schema design, Aggregation, Indexing"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Google Play Store Deployment",
+          "Firebase (Auth, Firestore, FCM)",
+          "MVVM Architecture",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Retrofit & OkHttp"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 26,
+    "name": "Jay Bansal",
+    "email": "jay179@gmail.com",
+    "mobile": "+91 6347246336",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "TestFlight & App Store Connect",
+          "Xcode Instruments & Profiling",
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Google Play Store Deployment",
+          "Material Design 3"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Pandas & NumPy",
+          "Django – MVT, ORM, REST Framework",
+          "FastAPI – Pydantic, Async Endpoints",
+          "SQLAlchemy & Alembic Migrations"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 27,
+    "name": "Jiya Srivastava",
+    "email": "jiya@hotmail.com",
+    "mobile": "+91 9826366476",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Mongoose ORM",
+          "JWT Authentication",
+          "Axios / Fetch API",
+          "Express.js – REST API, Middleware, Authentication",
+          "Docker & Deployment (Vercel / Render)"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Xcode Instruments & Profiling",
+          "URLSession & Alamofire",
+          "Combine Framework",
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout",
+          "MVVM-C Architecture"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 28,
+    "name": "Kabir Chopra",
+    "email": "kabir863@yahoo.com",
+    "mobile": "+91 9912942426",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Push Notifications (APNs)",
+          "URLSession & Alamofire",
+          "Core Data",
+          "Combine Framework",
+          "Swift – Optionals, Protocols, Closures",
+          "UIKit – Storyboards, Auto Layout",
+          "SwiftUI – Views, State, Combine"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Google Play Store Deployment",
+          "Material Design 3",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "MVVM Architecture"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Celery & Redis Task Queue",
+          "Pandas & NumPy",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Docker & Gunicorn Deployment",
+          "PostgreSQL / MySQL"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 29,
+    "name": "Karan Das",
+    "email": "karan165@icloud.com",
+    "mobile": "+91 8310425544",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "URLSession & Alamofire",
+          "Swift – Optionals, Protocols, Closures",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 30,
+    "name": "Kavya Verma",
+    "email": "kavya@yahoo.com",
+    "mobile": "+91 9494238012",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "UIKit – Storyboards, Auto Layout",
+          "Xcode Instruments & Profiling",
+          "Push Notifications (APNs)",
+          "Core Data",
+          "Combine Framework"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Mongoose ORM",
+          "React Router v6",
+          "Axios / Fetch API",
+          "Docker & Deployment (Vercel / Render)",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "Node.js – Event-driven architecture",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Nginx Reverse Proxy",
+          "TypeScript",
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 31,
+    "name": "Kiara Patel",
+    "email": "kiara@hotmail.com",
+    "mobile": "+91 8980789064",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Express.js – REST API, CORS, Rate Limiting",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Angular Material UI",
+          "TypeScript"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Google Play Store Deployment",
+          "Hilt Dependency Injection",
+          "Retrofit & OkHttp",
+          "Room Database",
+          "MVVM Architecture",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 32,
+    "name": "Kriti Iyer",
+    "email": "kriti@icloud.com",
+    "mobile": "+91 8105447332",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "Hilt Dependency Injection",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "MVVM Architecture",
+          "Kotlin – Coroutines, Flow, Sealed Classes"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "Django – MVT, ORM, REST Framework",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "Scikit-learn Basics",
+          "PostgreSQL / MySQL",
+          "SQLAlchemy & Alembic Migrations",
+          "FastAPI – Pydantic, Async Endpoints"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 33,
+    "name": "Kunal Gupta",
+    "email": "kunal808@outlook.com",
+    "mobile": "+91 7015447994",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "Pandas & NumPy",
+          "Django – MVT, ORM, REST Framework",
+          "Celery & Redis Task Queue",
+          "Scikit-learn Basics"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 34,
+    "name": "Lakshmi Pandey",
+    "email": "lakshmi@yahoo.com",
+    "mobile": "+91 6735452626",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Axios / Fetch API",
+          "Docker & Deployment (Vercel / Render)",
+          "Express.js – REST API, Middleware, Authentication",
+          "Socket.IO",
+          "Mongoose ORM",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "MVVM Architecture",
+          "Android SDK – Activities, Fragments, Intents",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular – Components, Services, RxJS",
+          "MongoDB – Schema design, Atlas Cloud",
+          "TypeScript",
+          "JWT & OAuth2",
+          "Angular Material UI",
+          "Node.js – Event-driven architecture",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 35,
+    "name": "Manish Nair",
+    "email": "manish@rediffmail.com",
+    "mobile": "+91 7001363954",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Hilt Dependency Injection",
+          "Firebase (Auth, Firestore, FCM)",
+          "Room Database",
+          "MVVM Architecture",
+          "Google Play Store Deployment",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Node.js – Event Loop, Streams, Clustering",
+          "React.js – Hooks, Context API, Redux",
+          "Mongoose ORM",
+          "Axios / Fetch API",
+          "Docker & Deployment (Vercel / Render)",
+          "Express.js – REST API, Middleware, Authentication",
+          "MongoDB – Schema design, Aggregation, Indexing"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 36,
+    "name": "Meera Patel",
+    "email": "meera423@icloud.com",
+    "mobile": "+91 9155334973",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "Axios / Fetch API",
+          "Mongoose ORM",
+          "Node.js – Event Loop, Streams, Clustering",
+          "MongoDB – Schema design, Aggregation, Indexing"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "TypeScript",
+          "JWT & OAuth2",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 37,
+    "name": "Mihir Garg",
+    "email": "mihir@icloud.com",
+    "mobile": "+91 9233505148",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "React Router v6",
+          "Mongoose ORM",
+          "Docker & Deployment (Vercel / Render)",
+          "Socket.IO",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Google Play Store Deployment",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Material Design 3",
+          "Room Database"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 38,
+    "name": "Mira Iyer",
+    "email": "mira979@rediffmail.com",
+    "mobile": "+91 7953249853",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Express.js – REST API, Middleware, Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Room Database",
+          "Retrofit & OkHttp",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Core Data",
+          "Combine Framework",
+          "TestFlight & App Store Connect",
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 39,
+    "name": "Mohit Garg",
+    "email": "mohit555@yahoo.com",
+    "mobile": "+91 7976147356",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "React Router v6",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Swift – Optionals, Protocols, Closures",
+          "SwiftUI – Views, State, Combine",
+          "UIKit – Storyboards, Auto Layout",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "MVVM Architecture",
+          "Google Play Store Deployment",
+          "Retrofit & OkHttp",
+          "Android SDK – Activities, Fragments, Intents",
+          "Firebase (Auth, Firestore, FCM)",
+          "Room Database"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 40,
+    "name": "Namrata Singh",
+    "email": "namrata750@yahoo.com",
+    "mobile": "+91 6646750839",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "TestFlight & App Store Connect",
+          "Swift – Optionals, Protocols, Closures",
+          "URLSession & Alamofire",
+          "SwiftUI – Views, State, Combine",
+          "Combine Framework",
+          "UIKit – Storyboards, Auto Layout",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "JWT Authentication",
+          "Socket.IO",
+          "React.js – Hooks, Context API, Redux",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Room Database",
+          "Firebase (Auth, Firestore, FCM)",
+          "Material Design 3"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 41,
+    "name": "Neha Dubey",
+    "email": "neha@rediffmail.com",
+    "mobile": "+91 7937116193",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "UIKit – Storyboards, Auto Layout",
+          "Xcode Instruments & Profiling",
+          "URLSession & Alamofire",
+          "Swift – Optionals, Protocols, Closures"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 42,
+    "name": "Nikhil Sen",
+    "email": "nikhil@rediffmail.com",
+    "mobile": "+91 7061480951",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "Axios / Fetch API",
+          "React.js – Hooks, Context API, Redux",
+          "Docker & Deployment (Vercel / Render)",
+          "JWT Authentication"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Hilt Dependency Injection",
+          "Firebase (Auth, Firestore, FCM)",
+          "Android SDK – Activities, Fragments, Intents",
+          "MVVM Architecture",
+          "Kotlin – Coroutines, Flow, Sealed Classes"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "Angular – Components, Services, RxJS",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "TypeScript",
+          "NgRx State Management"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 43,
+    "name": "Nisha Agarwal",
+    "email": "nisha@outlook.com",
+    "mobile": "+91 8678828638",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Node.js – Event Loop, Streams, Clustering",
+          "React Router v6",
+          "React.js – Hooks, Context API, Redux",
+          "Docker & Deployment (Vercel / Render)",
+          "Mongoose ORM",
+          "Express.js – REST API, Middleware, Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Hilt Dependency Injection",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Express.js – REST API, CORS, Rate Limiting",
+          "NgRx State Management",
+          "TypeScript",
+          "Nginx Reverse Proxy",
+          "JWT & OAuth2",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 44,
+    "name": "Nishant Pillai",
+    "email": "nishant@yahoo.com",
+    "mobile": "+91 8516323577",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Push Notifications (APNs)",
+          "Swift – Optionals, Protocols, Closures",
+          "Xcode Instruments & Profiling",
+          "Core Data",
+          "MVVM-C Architecture",
+          "TestFlight & App Store Connect",
+          "SwiftUI – Views, State, Combine"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Nginx Reverse Proxy",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Mongoose ORM",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 45,
+    "name": "Palak Garg",
+    "email": "palak@hotmail.com",
+    "mobile": "+91 7487807581",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "TypeScript",
+          "Node.js – Event-driven architecture",
+          "Angular – Components, Services, RxJS",
+          "Mongoose ORM",
+          "Nginx Reverse Proxy",
+          "Angular Material UI",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "JWT Authentication",
+          "Express.js – REST API, Middleware, Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Socket.IO",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 46,
+    "name": "Pankaj Mehta",
+    "email": "pankaj@outlook.com",
+    "mobile": "+91 6505928396",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Firebase (Auth, Firestore, FCM)",
+          "Android SDK – Activities, Fragments, Intents",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Python Core – OOP, Decorators, Generators",
+          "Celery & Redis Task Queue",
+          "SQLAlchemy & Alembic Migrations",
+          "Scikit-learn Basics"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular – Components, Services, RxJS",
+          "Angular Material UI",
+          "Nginx Reverse Proxy",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "NgRx State Management",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 47,
+    "name": "Pooja Kumar",
+    "email": "pooja61@protonmail.com",
+    "mobile": "+91 7237289545",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Xcode Instruments & Profiling",
+          "URLSession & Alamofire",
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout",
+          "TestFlight & App Store Connect",
+          "SwiftUI – Views, State, Combine"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "MVVM Architecture",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 48,
+    "name": "Priya Reddy",
+    "email": "priya453@protonmail.com",
+    "mobile": "+91 9396740456",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures",
+          "Push Notifications (APNs)",
+          "UIKit – Storyboards, Auto Layout",
+          "Xcode Instruments & Profiling",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 49,
+    "name": "Rahul Kumar",
+    "email": "rahul@hotmail.com",
+    "mobile": "+91 6437092775",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "MVVM Architecture",
+          "Retrofit & OkHttp",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 50,
+    "name": "Raj Mehta",
+    "email": "raj842@protonmail.com",
+    "mobile": "+91 7140794005",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication",
+          "Mongoose ORM",
+          "Axios / Fetch API",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "React Router v6"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Pandas & NumPy",
+          "PostgreSQL / MySQL",
+          "Scikit-learn Basics",
+          "Docker & Gunicorn Deployment",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Django – MVT, ORM, REST Framework"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 51,
+    "name": "Rajesh Bansal",
+    "email": "rajesh295@rediffmail.com",
+    "mobile": "+91 6227416945",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Axios / Fetch API",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Room Database",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Hilt Dependency Injection",
+          "Firebase (Auth, Firestore, FCM)",
+          "Retrofit & OkHttp"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 52,
+    "name": "Raksha Mehta",
+    "email": "raksha658@protonmail.com",
+    "mobile": "+91 8186393263",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Pandas & NumPy",
+          "Python Core – OOP, Decorators, Generators",
+          "Scikit-learn Basics",
+          "Django – MVT, ORM, REST Framework",
+          "Celery & Redis Task Queue"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular – Components, Services, RxJS",
+          "NgRx State Management",
+          "Node.js – Event-driven architecture",
+          "MongoDB – Schema design, Atlas Cloud",
+          "TypeScript"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 53,
+    "name": "Ramesh Pillai",
+    "email": "ramesh@hotmail.com",
+    "mobile": "+91 9455554368",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Core Data",
+          "TestFlight & App Store Connect",
+          "MVVM-C Architecture",
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures",
+          "UIKit – Storyboards, Auto Layout"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 54,
+    "name": "Ravi Mehta",
+    "email": "ravi578@gmail.com",
+    "mobile": "+91 8763922269",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "JWT Authentication",
+          "Docker & Deployment (Vercel / Render)"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Nginx Reverse Proxy",
+          "Angular – Components, Services, RxJS",
+          "JWT & OAuth2",
+          "NgRx State Management",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 55,
+    "name": "Ritesh Pillai",
+    "email": "ritesh@icloud.com",
+    "mobile": "+91 8977669475",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "Docker & Deployment (Vercel / Render)",
+          "Node.js – Event Loop, Streams, Clustering",
+          "JWT Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 56,
+    "name": "Rohit Verma",
+    "email": "rohit767@yahoo.com",
+    "mobile": "+91 6905409765",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Nginx Reverse Proxy",
+          "Mongoose ORM",
+          "JWT & OAuth2",
+          "NgRx State Management",
+          "Angular Material UI",
+          "TypeScript"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Docker & Deployment (Vercel / Render)",
+          "Axios / Fetch API",
+          "Express.js – REST API, Middleware, Authentication",
+          "Mongoose ORM",
+          "React.js – Hooks, Context API, Redux",
+          "Socket.IO",
+          "JWT Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 57,
+    "name": "Roshni Rao",
+    "email": "roshni@yahoo.com",
+    "mobile": "+91 8451183662",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "Socket.IO",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 58,
+    "name": "Ruchi Chopra",
+    "email": "ruchi96@outlook.com",
+    "mobile": "+91 6951867665",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Push Notifications (APNs)",
+          "MVVM-C Architecture",
+          "Xcode Instruments & Profiling",
+          "Combine Framework",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 59,
+    "name": "Sachin Dubey",
+    "email": "sachin679@yahoo.com",
+    "mobile": "+91 6050830854",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Android SDK – Activities, Fragments, Intents",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Retrofit & OkHttp",
+          "MVVM Architecture",
+          "Firebase (Auth, Firestore, FCM)",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "PostgreSQL / MySQL",
+          "Scikit-learn Basics",
+          "Pandas & NumPy",
+          "Celery & Redis Task Queue",
+          "SQLAlchemy & Alembic Migrations",
+          "FastAPI – Pydantic, Async Endpoints"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "Combine Framework",
+          "TestFlight & App Store Connect",
+          "Push Notifications (APNs)"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 60,
+    "name": "Sahil Iyer",
+    "email": "sahil12@gmail.com",
+    "mobile": "+91 7435023694",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 61,
+    "name": "Sakshi Garg",
+    "email": "sakshi574@hotmail.com",
+    "mobile": "+91 9411430819",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "MVVM Architecture",
+          "Android SDK – Activities, Fragments, Intents",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 62,
+    "name": "Sandeep Joshi",
+    "email": "sandeep@gmail.com",
+    "mobile": "+91 7798446604",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "TypeScript",
+          "Node.js – Event-driven architecture",
+          "Angular Material UI"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Material Design 3",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Google Play Store Deployment",
+          "Android SDK – Activities, Fragments, Intents",
+          "Room Database",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "Swift – Optionals, Protocols, Closures",
+          "SwiftUI – Views, State, Combine",
+          "Xcode Instruments & Profiling",
+          "Push Notifications (APNs)",
+          "TestFlight & App Store Connect"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 63,
+    "name": "Sanjay Malhotra",
+    "email": "sanjay731@protonmail.com",
+    "mobile": "+91 8872789009",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Google Play Store Deployment",
+          "Room Database",
+          "Jetpack Compose – Layouts, State, Navigation"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 64,
+    "name": "Sarika Patel",
+    "email": "sarika966@hotmail.com",
+    "mobile": "+91 7288278531",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures",
+          "Xcode Instruments & Profiling",
+          "Core Data",
+          "MVVM-C Architecture"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "JWT Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2025
+  },
+  {
+    "id": 65,
+    "name": "Seema Shah",
+    "email": "seema39@protonmail.com",
+    "mobile": "+91 7439497427",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React Router v6",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "JWT Authentication",
+          "Axios / Fetch API"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 66,
+    "name": "Shivam Bose",
+    "email": "shivam@gmail.com",
+    "mobile": "+91 9878230401",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout",
+          "SwiftUI – Views, State, Combine",
+          "Swift – Optionals, Protocols, Closures"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 67,
+    "name": "Shruti Sen",
+    "email": "shruti649@hotmail.com",
+    "mobile": "+91 7889165019",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "JWT & OAuth2",
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Node.js – Event Loop, Streams, Clustering",
+          "React Router v6",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Android SDK – Activities, Fragments, Intents",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Room Database",
+          "Material Design 3",
+          "MVVM Architecture"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 68,
+    "name": "Simran Sen",
+    "email": "simran495@rediffmail.com",
+    "mobile": "+91 8545190315",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Node.js – Event Loop, Streams, Clustering",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Mongoose ORM",
+          "Express.js – REST API, Middleware, Authentication",
+          "JWT Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Celery & Redis Task Queue",
+          "Scikit-learn Basics",
+          "SQLAlchemy & Alembic Migrations",
+          "PostgreSQL / MySQL",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "Django – MVT, ORM, REST Framework"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 69,
+    "name": "Sneha Mehta",
+    "email": "sneha441@outlook.com",
+    "mobile": "+91 9419026593",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "Combine Framework",
+          "Core Data",
+          "Push Notifications (APNs)"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Room Database",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Hilt Dependency Injection",
+          "Android SDK – Activities, Fragments, Intents",
+          "Material Design 3",
+          "Firebase (Auth, Firestore, FCM)"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "Celery & Redis Task Queue",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Django – MVT, ORM, REST Framework"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 70,
+    "name": "Sonal Tiwari",
+    "email": "sonal@icloud.com",
+    "mobile": "+91 8164730580",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Scikit-learn Basics",
+          "Pandas & NumPy",
+          "Docker & Gunicorn Deployment",
+          "Celery & Redis Task Queue",
+          "SQLAlchemy & Alembic Migrations",
+          "FastAPI – Pydantic, Async Endpoints",
+          "PostgreSQL / MySQL"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 71,
+    "name": "Sonia Das",
+    "email": "sonia141@outlook.com",
+    "mobile": "+91 6138831421",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Mongoose ORM",
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "MongoDB – Schema design, Aggregation, Indexing"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "NgRx State Management",
+          "Angular Material UI",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Nginx Reverse Proxy",
+          "TypeScript",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 72,
+    "name": "Sourav Shah",
+    "email": "sourav@icloud.com",
+    "mobile": "+91 9975042292",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Retrofit & OkHttp",
+          "MVVM Architecture",
+          "Material Design 3"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React Router v6",
+          "Mongoose ORM",
+          "JWT Authentication",
+          "Docker & Deployment (Vercel / Render)",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Axios / Fetch API",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 73,
+    "name": "Suresh Mehta",
+    "email": "suresh@hotmail.com",
+    "mobile": "+91 6519884690",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "SwiftUI – Views, State, Combine",
+          "Push Notifications (APNs)",
+          "UIKit – Storyboards, Auto Layout",
+          "Core Data",
+          "Swift – Optionals, Protocols, Closures",
+          "URLSession & Alamofire",
+          "MVVM-C Architecture"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 74,
+    "name": "Swati Sharma",
+    "email": "swati676@protonmail.com",
+    "mobile": "+91 8263389039",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "Push Notifications (APNs)",
+          "Combine Framework",
+          "URLSession & Alamofire",
+          "Core Data"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 75,
+    "name": "Tanvi Reddy",
+    "email": "tanvi@rediffmail.com",
+    "mobile": "+91 6114074695",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "TestFlight & App Store Connect",
+          "Combine Framework",
+          "Xcode Instruments & Profiling",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 76,
+    "name": "Tarun Sharma",
+    "email": "tarun@rediffmail.com",
+    "mobile": "+91 6877347138",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Node.js – Event-driven architecture",
+          "NgRx State Management",
+          "TypeScript",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2027
+  },
+  {
+    "id": 77,
+    "name": "Tushar Singh",
+    "email": "tushar922@gmail.com",
+    "mobile": "+91 9706976112",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Celery & Redis Task Queue",
+          "Pandas & NumPy",
+          "Django – MVT, ORM, REST Framework",
+          "Flask – Blueprints, Jinja2, WTForms"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "MVVM Architecture",
+          "Android SDK – Activities, Fragments, Intents",
+          "Retrofit & OkHttp",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Room Database"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 78,
+    "name": "Uday Garg",
+    "email": "uday388@outlook.com",
+    "mobile": "+91 7067709939",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "JWT & OAuth2",
+          "Nginx Reverse Proxy",
+          "Mongoose ORM",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "Push Notifications (APNs)",
+          "Xcode Instruments & Profiling",
+          "Core Data",
+          "Swift – Optionals, Protocols, Closures",
+          "Combine Framework"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 79,
+    "name": "Uma Iyer",
+    "email": "uma@outlook.com",
+    "mobile": "+91 7864242923",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React Router v6",
+          "Axios / Fetch API",
+          "Socket.IO",
+          "Express.js – REST API, Middleware, Authentication",
+          "JWT Authentication",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Node.js – Event Loop, Streams, Clustering"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 80,
+    "name": "Vaibhav Srivastava",
+    "email": "vaibhav@hotmail.com",
+    "mobile": "+91 9620353471",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Axios / Fetch API",
+          "Express.js – REST API, Middleware, Authentication",
+          "React.js – Hooks, Context API, Redux",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "JWT Authentication",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular Material UI",
+          "NgRx State Management",
+          "Node.js – Event-driven architecture",
+          "JWT & OAuth2",
+          "Nginx Reverse Proxy"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 81,
+    "name": "Varsha Mehta",
+    "email": "varsha591@icloud.com",
+    "mobile": "+91 8764199932",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture",
+          "TypeScript",
+          "JWT & OAuth2",
+          "Angular Material UI",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 82,
+    "name": "Vikas Das",
+    "email": "vikas@gmail.com",
+    "mobile": "+91 6422153277",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Socket.IO",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "React Router v6",
+          "Docker & Deployment (Vercel / Render)"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 83,
+    "name": "Vikram Pillai",
+    "email": "vikram@gmail.com",
+    "mobile": "+91 9325362507",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Mongoose ORM",
+          "React.js – Hooks, Context API, Redux",
+          "Docker & Deployment (Vercel / Render)",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Express.js – REST API, Middleware, Authentication",
+          "Socket.IO",
+          "Axios / Fetch API"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Node.js – Event-driven architecture",
+          "Nginx Reverse Proxy",
+          "NgRx State Management"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Python Core – OOP, Decorators, Generators",
+          "Scikit-learn Basics",
+          "Docker & Gunicorn Deployment",
+          "Celery & Redis Task Queue",
+          "PostgreSQL / MySQL",
+          "FastAPI – Pydantic, Async Endpoints",
+          "Pandas & NumPy"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 84,
+    "name": "Vipul Mehta",
+    "email": "vipul146@icloud.com",
+    "mobile": "+91 7739468245",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Python Core – OOP, Decorators, Generators",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "Docker & Gunicorn Deployment",
+          "Celery & Redis Task Queue",
+          "Pandas & NumPy",
+          "PostgreSQL / MySQL"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Swift – Optionals, Protocols, Closures",
+          "UIKit – Storyboards, Auto Layout",
+          "Core Data",
+          "Xcode Instruments & Profiling",
+          "TestFlight & App Store Connect",
+          "Push Notifications (APNs)",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "NgRx State Management",
+          "Node.js – Event-driven architecture",
+          "Mongoose ORM",
+          "Angular Material UI"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 85,
+    "name": "Vivek Shukla",
+    "email": "vivek@yahoo.com",
+    "mobile": "+91 8378226991",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 86,
+    "name": "Yash Gupta",
+    "email": "yash644@gmail.com",
+    "mobile": "+91 6837731692",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Hilt Dependency Injection",
+          "Material Design 3",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Room Database",
+          "Retrofit & OkHttp",
+          "Google Play Store Deployment",
+          "MVVM Architecture"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Docker & Gunicorn Deployment",
+          "Pandas & NumPy",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "SQLAlchemy & Alembic Migrations",
+          "PostgreSQL / MySQL",
+          "Scikit-learn Basics"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2027
+  },
+  {
+    "id": 87,
+    "name": "Yogesh Joshi",
+    "email": "yogesh@gmail.com",
+    "mobile": "+91 7344541323",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Express.js – REST API, Middleware, Authentication",
+          "JWT Authentication",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular – Components, Services, RxJS",
+          "JWT & OAuth2",
+          "Mongoose ORM",
+          "Nginx Reverse Proxy",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "TypeScript",
+          "Node.js – Event-driven architecture"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 88,
+    "name": "Zara Chatterjee",
+    "email": "zara@hotmail.com",
+    "mobile": "+91 8273555727",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Express.js – REST API, Middleware, Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "JWT Authentication",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "React Router v6"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular Material UI",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Node.js – Event-driven architecture",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Django – MVT, ORM, REST Framework",
+          "Scikit-learn Basics",
+          "Python Core – OOP, Decorators, Generators",
+          "Celery & Redis Task Queue",
+          "PostgreSQL / MySQL",
+          "Docker & Gunicorn Deployment",
+          "Flask – Blueprints, Jinja2, WTForms"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 89,
+    "name": "Arnav Sharma",
+    "email": "arnav323@rediffmail.com",
+    "mobile": "+91 6307292783",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "MVVM-C Architecture",
+          "Combine Framework",
+          "SwiftUI – Views, State, Combine",
+          "Xcode Instruments & Profiling",
+          "UIKit – Storyboards, Auto Layout",
+          "Push Notifications (APNs)",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Android SDK – Activities, Fragments, Intents",
+          "Firebase (Auth, Firestore, FCM)",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "MVVM Architecture"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  },
+  {
+    "id": 90,
+    "name": "Bharat Shah",
+    "email": "bharat915@rediffmail.com",
+    "mobile": "+91 7155815912",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Atlas Cloud",
+          "Angular Material UI",
+          "NgRx State Management",
+          "Mongoose ORM"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "JWT Authentication",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Socket.IO"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Core Data",
+          "Swift – Optionals, Protocols, Closures",
+          "SwiftUI – Views, State, Combine",
+          "Push Notifications (APNs)",
+          "UIKit – Storyboards, Auto Layout"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2026
+  },
+  {
+    "id": 91,
+    "name": "Chirag Bansal",
+    "email": "chirag589@hotmail.com",
+    "mobile": "+91 7301236208",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Firebase (Auth, Firestore, FCM)",
+          "Retrofit & OkHttp",
+          "Material Design 3",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Room Database",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Node.js – Event Loop, Streams, Clustering",
+          "Docker & Deployment (Vercel / Render)",
+          "React Router v6",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "Express.js – REST API, Middleware, Authentication"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 92,
+    "name": "Disha Verma",
+    "email": "disha91@protonmail.com",
+    "mobile": "+91 7297364193",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "FastAPI – Pydantic, Async Endpoints",
+          "Python Core – OOP, Decorators, Generators",
+          "Scikit-learn Basics",
+          "SQLAlchemy & Alembic Migrations",
+          "Docker & Gunicorn Deployment",
+          "Django – MVT, ORM, REST Framework",
+          "Flask – Blueprints, Jinja2, WTForms"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2027
+  },
+  {
+    "id": 93,
+    "name": "Farhan Bose",
+    "email": "farhan@rediffmail.com",
+    "mobile": "+91 9885788895",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Celery & Redis Task Queue",
+          "Django – MVT, ORM, REST Framework",
+          "Scikit-learn Basics",
+          "PostgreSQL / MySQL",
+          "Python Core – OOP, Decorators, Generators",
+          "Docker & Gunicorn Deployment",
+          "Pandas & NumPy"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "JWT & OAuth2",
+          "NgRx State Management",
+          "Node.js – Event-driven architecture",
+          "Nginx Reverse Proxy",
+          "Express.js – REST API, CORS, Rate Limiting"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "TestFlight & App Store Connect",
+          "Core Data",
+          "UIKit – Storyboards, Auto Layout",
+          "URLSession & Alamofire"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 94,
+    "name": "Garima Pillai",
+    "email": "garima479@outlook.com",
+    "mobile": "+91 6669221034",
+    "technicalSkills": [
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular Material UI",
+          "Node.js – Event-driven architecture",
+          "NgRx State Management",
+          "TypeScript",
+          "Express.js – REST API, CORS, Rate Limiting",
+          "MongoDB – Schema design, Atlas Cloud",
+          "Angular – Components, Services, RxJS"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Retrofit & OkHttp",
+          "MVVM Architecture",
+          "Material Design 3",
+          "Hilt Dependency Injection"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Swift – Optionals, Protocols, Closures",
+          "Xcode Instruments & Profiling",
+          "Push Notifications (APNs)",
+          "TestFlight & App Store Connect",
+          "SwiftUI – Views, State, Combine"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2021,
+    "graduationYear": 2025
+  },
+  {
+    "id": 95,
+    "name": "Hitesh Singh",
+    "email": "hitesh@gmail.com",
+    "mobile": "+91 8337691650",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Scikit-learn Basics",
+          "PostgreSQL / MySQL",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "Celery & Redis Task Queue"
+        ],
+        "proficiencyLevel": "Advanced"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Angular Material UI",
+          "NgRx State Management",
+          "Node.js – Event-driven architecture",
+          "Nginx Reverse Proxy",
+          "TypeScript",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2026
+  },
+  {
+    "id": 96,
+    "name": "Isha Chopra",
+    "email": "isha@hotmail.com",
+    "mobile": "+91 8716158824",
+    "technicalSkills": [
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Scikit-learn Basics",
+          "SQLAlchemy & Alembic Migrations",
+          "Celery & Redis Task Queue",
+          "Docker & Gunicorn Deployment",
+          "Flask – Blueprints, Jinja2, WTForms",
+          "Django – MVT, ORM, REST Framework",
+          "Python Core – OOP, Decorators, Generators"
+        ],
+        "proficiencyLevel": "Advanced"
+      }
+    ],
+    "enrolledYear": 2022,
+    "graduationYear": 2026
+  },
+  {
+    "id": 97,
+    "name": "Jayesh Chatterjee",
+    "email": "jayesh625@yahoo.com",
+    "mobile": "+91 6062237030",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "React.js – Hooks, Context API, Redux",
+          "Express.js – REST API, Middleware, Authentication",
+          "Axios / Fetch API",
+          "Node.js – Event Loop, Streams, Clustering",
+          "MongoDB – Schema design, Aggregation, Indexing",
+          "React Router v6"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "MEAN",
+        "label": "MEAN Stack",
+        "subSkills": [
+          "Mongoose ORM",
+          "Angular – Components, Services, RxJS",
+          "Node.js – Event-driven architecture",
+          "TypeScript",
+          "MongoDB – Schema design, Atlas Cloud"
+        ],
+        "proficiencyLevel": "Intermediate"
+      },
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "TestFlight & App Store Connect",
+          "Push Notifications (APNs)",
+          "URLSession & Alamofire",
+          "UIKit – Storyboards, Auto Layout",
+          "Core Data",
+          "Swift – Optionals, Protocols, Closures"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2023,
+    "graduationYear": 2025
+  },
+  {
+    "id": 98,
+    "name": "Kartik Pillai",
+    "email": "kartik783@protonmail.com",
+    "mobile": "+91 9292546397",
+    "technicalSkills": [
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Android SDK – Activities, Fragments, Intents",
+          "Kotlin – Coroutines, Flow, Sealed Classes",
+          "Room Database",
+          "Retrofit & OkHttp",
+          "MVVM Architecture",
+          "Google Play Store Deployment"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Python",
+        "label": "Python / Django / Flask",
+        "subSkills": [
+          "Pandas & NumPy",
+          "Celery & Redis Task Queue",
+          "Docker & Gunicorn Deployment",
+          "SQLAlchemy & Alembic Migrations",
+          "FastAPI – Pydantic, Async Endpoints"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2025
+  },
+  {
+    "id": 99,
+    "name": "Aarav Mishra",
+    "email": "aarav666@protonmail.com",
+    "mobile": "+91 6949227609",
+    "technicalSkills": [
+      {
+        "stack": "MERN",
+        "label": "MERN Stack",
+        "subSkills": [
+          "Docker & Deployment (Vercel / Render)",
+          "React.js – Hooks, Context API, Redux",
+          "Node.js – Event Loop, Streams, Clustering",
+          "Axios / Fetch API",
+          "JWT Authentication",
+          "React Router v6"
+        ],
+        "proficiencyLevel": "Intermediate"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2027
+  },
+  {
+    "id": 100,
+    "name": "Aditi Sen",
+    "email": "aditi109@rediffmail.com",
+    "mobile": "+91 7605829975",
+    "technicalSkills": [
+      {
+        "stack": "iOS",
+        "label": "iOS Development",
+        "subSkills": [
+          "Xcode Instruments & Profiling",
+          "Push Notifications (APNs)",
+          "MVVM-C Architecture",
+          "Swift – Optionals, Protocols, Closures",
+          "TestFlight & App Store Connect"
+        ],
+        "proficiencyLevel": "Beginner"
+      },
+      {
+        "stack": "Android",
+        "label": "Android Development",
+        "subSkills": [
+          "Hilt Dependency Injection",
+          "Jetpack Compose – Layouts, State, Navigation",
+          "Google Play Store Deployment",
+          "Android SDK – Activities, Fragments, Intents",
+          "Firebase (Auth, Firestore, FCM)",
+          "Kotlin – Coroutines, Flow, Sealed Classes"
+        ],
+        "proficiencyLevel": "Beginner"
+      }
+    ],
+    "enrolledYear": 2024,
+    "graduationYear": 2026
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "name": "mcp-fullstack-suite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-server launcher for Student Directory & Job Portal systems",
+  "scripts": {
+    "start": "concurrently -k -n \"STUDENT-API,STUDENT-WEB,JOB-API,JOB-WEB\" -c \"bgBlue.bold,bgCyan.bold,bgGreen.bold,bgMagenta.bold\" \"npm start --prefix students-server\" \"npm run dev --prefix students-portal\" \"npm start --prefix job-portal-server\" \"npm run dev --prefix job-portal-web\"",
+    "dev": "concurrently -k -n \"STUDENT-API,STUDENT-WEB,JOB-API,JOB-WEB\" -c \"bgBlue.bold,bgCyan.bold,bgGreen.bold,bgMagenta.bold\" \"npm run dev --prefix students-server\" \"npm run dev --prefix students-portal\" \"npm run dev --prefix job-portal-server\" \"npm run dev --prefix job-portal-web\"",
+    "start:students": "concurrently -k -n \"STUDENT-API,STUDENT-WEB\" -c \"bgBlue.bold,bgCyan.bold\" \"npm start --prefix students-server\" \"npm run dev --prefix students-portal\"",
+    "start:jobs": "concurrently -k -n \"JOB-API,JOB-WEB\" -c \"bgGreen.bold,bgMagenta.bold\" \"npm start --prefix job-portal-server\" \"npm run dev --prefix job-portal-web\"",
+    "start:mcp": "node mcp-server/src/index.js",
+    "test:mcp": "npm run test:tools --prefix mcp-server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
