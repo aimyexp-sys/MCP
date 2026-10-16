@@ -42,7 +42,7 @@ export const getJobsSchema = {
 };
 
 export const getJobsDescription =
-  "Retrieve job vacancies from the Job Portal directory. Includes company details, HR contacts, job role descriptions, technical requirements (required & preferred skills, experience level, education), salary ranges, and work arrangements. Supports keyword search, category/stack filtering, experience level filtering, and pagination.";
+  "Retrieve job vacancies from the Job Portal directory. Includes company details, official careers contact, job role descriptions, technical requirements (required & preferred skills, experience level, education), salary ranges, and work arrangements. Direct recruiter personal numbers are masked for privacy. Supports keyword search, category/stack filtering, experience level filtering, and pagination.";
 
 export async function handleGetJobs(args) {
   try {

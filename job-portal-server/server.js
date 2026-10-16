@@ -8,11 +8,13 @@ const morgan  = require("morgan");
 
 const jobsRoutes = require("./routes/jobs");
 
+const { getCorsOptions, isAuthorized } = require("./middleware/security");
+
 const app  = express();
 const PORT = process.env.PORT || 4000;
 
 // ── Global Middleware ────────────────────────────────────────
-app.use(cors());
+app.use(cors(getCorsOptions()));
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -22,8 +24,14 @@ app.get("/", (req, res) => {
     message: "🚀 Job Portal REST API Backend is running!",
     version: "1.0.0",
     description: "Backend service delivering 100+ realistic tech job vacancies categorized by modern tech stacks.",
+    security: {
+      authHeader: "X-API-Key or Authorization: Bearer <key>",
+      authenticated: isAuthorized(req),
+      mutationAuthRequired: true,
+      recruiterPrivacyPolicy: "Recruiter personal phone numbers and direct contact names are masked on public endpoints."
+    },
     primaryEndpoints: {
-      "GET /api/jobs": "Retrieve ALL 100 job postings in a single API request",
+      "GET /api/jobs": "Retrieve ALL job postings (recruiter contact masked unless authenticated)",
       "GET /api/jobs?category=MERN": "Filter by modern tech stack (e.g. MERN, MEAN, Python/Django, Android, iOS)",
       "GET /api/jobs?search=react": "Search across titles, companies, descriptions, and skills",
       "GET /api/jobs?jobType=Remote": "Filter by job type (Full-Time, Remote, Hybrid, Contract)",
@@ -31,8 +39,9 @@ app.get("/", (req, res) => {
       "GET /api/jobs/categories": "View distribution summary across modern tech stacks",
       "GET /api/jobs/category/:name": "View all postings for a designated tech category",
       "GET /api/jobs/:id": "Fetch single job vacancy detail by ID (e.g. JOB-001)",
-      "POST /api/jobs": "Create a new job posting",
-      "DELETE /api/jobs/:id": "Remove a job posting by ID"
+      "GET /api/jobs/auth/status": "Check your current authentication status",
+      "POST /api/jobs": "Create a new job posting [AUTHENTICATION REQUIRED]",
+      "DELETE /api/jobs/:id": "Remove a job posting by ID [AUTHENTICATION REQUIRED]"
     },
     supportedTechStacks: [
       "MERN (MongoDB, Express, React, Node.js)",

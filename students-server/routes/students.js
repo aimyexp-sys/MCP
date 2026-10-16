@@ -5,6 +5,7 @@
 const express = require("express");
 const router = express.Router();
 const { students, TECH_STACKS } = require("../data/students");
+const { isAuthorized, formatStudent } = require("../middleware/security");
 
 // ── Utility: paginate an array ───────────────────────────────
 function paginate(arr, page, limit) {
@@ -12,6 +13,22 @@ function paginate(arr, page, limit) {
   const end = start + limit;
   return arr.slice(start, end);
 }
+
+// ────────────────────────────────────────────────────────────
+// GET /api/students/auth/status
+//   Check authentication state and privileges
+// ────────────────────────────────────────────────────────────
+router.get("/auth/status", (req, res) => {
+  const authorized = isAuthorized(req);
+  res.status(200).json({
+    success: true,
+    authenticated: authorized,
+    role: authorized ? "admin/recruiter" : "public",
+    privacyStatus: authorized
+      ? "Full contact visibility granted."
+      : "Personal student data (emails, mobile numbers) is masked for privacy protection.",
+  });
+});
 
 // ────────────────────────────────────────────────────────────
 // GET /api/students
@@ -23,6 +40,7 @@ function paginate(arr, page, limit) {
 // ────────────────────────────────────────────────────────────
 router.get("/", (req, res) => {
   try {
+    const authorized = isAuthorized(req);
     let result = [...students];
 
     // ── Filter by tech stack ─────────────────────────────────
@@ -48,7 +66,9 @@ router.get("/", (req, res) => {
     // ── Pagination ───────────────────────────────────────────
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 100));
-    const paginatedData = paginate(result, page, limit);
+    const paginatedData = paginate(result, page, limit).map((s) =>
+      formatStudent(s, authorized)
+    );
 
     res.status(200).json({
       success: true,
@@ -57,6 +77,12 @@ router.get("/", (req, res) => {
         page,
         limit,
         totalPages: Math.ceil(total / limit),
+      },
+      privacy: {
+        contactMasked: !authorized,
+        notice: authorized
+          ? "Authenticated session: Unmasked student contact details provided."
+          : "Personal contact info (emails, mobile numbers) masked. Provide X-API-Key or Authorization header for unmasked access.",
       },
       data: paginatedData,
     });
@@ -76,7 +102,17 @@ router.get("/:id", (req, res) => {
     return res.status(404).json({ success: false, message: `Student with id ${id} not found.` });
   }
 
-  res.status(200).json({ success: true, data: student });
+  const authorized = isAuthorized(req);
+  res.status(200).json({
+    success: true,
+    privacy: {
+      contactMasked: !authorized,
+      notice: authorized
+        ? "Authenticated: Full contact details provided."
+        : "Personal contact info masked. Provide X-API-Key or Authorization header for unmasked access.",
+    },
+    data: formatStudent(student, authorized),
+  });
 });
 
 // ────────────────────────────────────────────────────────────
@@ -94,17 +130,25 @@ router.get("/stack/:stackName", (req, res) => {
     });
   }
 
-  const filtered = students.filter((s) =>
-    s.technicalSkills.some((ts) => ts.stack === stackName)
-  );
+  const authorized = isAuthorized(req);
+  const filtered = students
+    .filter((s) => s.technicalSkills.some((ts) => ts.stack === stackName))
+    .map((s) => formatStudent(s, authorized));
 
   res.status(200).json({
     success: true,
     stack: stackName,
     label: TECH_STACKS[stackName].label,
     total: filtered.length,
+    privacy: {
+      contactMasked: !authorized,
+      notice: authorized
+        ? "Authenticated: Full contact details provided."
+        : "Personal contact info masked.",
+    },
     data: filtered,
   });
 });
 
 module.exports = router;
+

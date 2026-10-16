@@ -5,20 +5,87 @@ import { createServer } from "./server.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+const MCP_API_KEY = process.env.MCP_API_KEY || process.env.API_KEY || "mcp-secret-key-2026";
 
-app.use(cors());
+// ── Strict CORS Policy ─────────────────────────────────────────
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
+  : [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:3000",
+      "http://localhost:4000",
+      "http://localhost:8080",
+      "https://exp-portal-mcp-server.onrender.com"
+    ];
 
-// Health check and root descriptor for Render
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow non-browser agents, CLI tools, or curl where origin is not present
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS policy violation: origin '${origin}' is not permitted.`));
+  },
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// ── Authentication Helper ───────────────────────────────────────
+function isAuthorizedMcp(req) {
+  const apiKey =
+    req.headers["x-api-key"] ||
+    (req.headers["authorization"]?.startsWith("Bearer ")
+      ? req.headers["authorization"].slice(7)
+      : null) ||
+    req.query.apiKey;
+
+  return Boolean(apiKey && apiKey === MCP_API_KEY);
+}
+
+function requireMcpAuth(req, res, next) {
+  if (!isAuthorizedMcp(req)) {
+    return res.status(401).json({
+      error: "Unauthorized",
+      message: "Authentication required for exp_portal-mcp-server. Provide a valid MCP API key via 'X-API-Key' header, 'Authorization: Bearer <key>', or '?apiKey=<key>' query parameter.",
+      protocol: "Model Context Protocol (MCP)",
+      transport: "HTTP/SSE"
+    });
+  }
+  next();
+}
+
+// ── Health check and root descriptor for Render ────────────────
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "ok",
     server: "exp_portal-mcp-server",
     protocol: "Model Context Protocol (MCP)",
     transport: "HTTP/SSE",
+    authentication: {
+      required: true,
+      authenticated: isAuthorizedMcp(req),
+      supportedMethods: [
+        "Header: X-API-Key: <key>",
+        "Header: Authorization: Bearer <key>",
+        "Query Param: ?apiKey=<key>"
+      ]
+    },
+    privacy: {
+      dataMinimizationActive: true,
+      studentContactProtection: "Emails and mobile numbers are masked for privacy",
+      recruiterContactProtection: "Recruiter personal phone numbers and direct names are masked"
+    },
     endpoints: {
       sse: "/sse",
       message: "/message",
-      health: "/health"
+      health: "/health",
+      authStatus: "/auth/status"
     },
     tools: ["get_students", "get_jobs"]
   });
@@ -28,17 +95,28 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy", timestamp: new Date().toISOString() });
 });
 
+app.get("/auth/status", (req, res) => {
+  const authenticated = isAuthorizedMcp(req);
+  res.status(200).json({
+    authenticated,
+    role: authenticated ? "authorized_mcp_client" : "unauthorized",
+    message: authenticated
+      ? "Valid credentials supplied. Ready for SSE /message operations."
+      : "No valid API key detected."
+  });
+});
+
 // Map active client sessions
 const sessions = new Map();
 
-// SSE subscription endpoint
-app.get("/sse", async (req, res) => {
-  console.log("[exp_portal-mcp-server] Incoming client connection on /sse");
-  
+// SSE subscription endpoint [PROTECTED]
+app.get("/sse", requireMcpAuth, async (req, res) => {
+  console.log("[exp_portal-mcp-server] Authorized client connection established on /sse");
+
   const server = createServer();
   const transport = new SSEServerTransport("/message", res);
 
-  sessions.set(transport.sessionId, { transport, server });
+  sessions.set(transport.sessionId, { transport, server, createdAt: Date.now() });
 
   req.on("close", async () => {
     console.log(`[exp_portal-mcp-server] Client disconnected (session: ${transport.sessionId})`);
@@ -49,8 +127,8 @@ app.get("/sse", async (req, res) => {
   await server.connect(transport);
 });
 
-// POST message endpoint for client JSON-RPC commands
-app.post("/message", async (req, res) => {
+// POST message endpoint for client JSON-RPC commands [PROTECTED]
+app.post("/message", requireMcpAuth, async (req, res) => {
   const sessionId = req.query.sessionId;
   const session = sessions.get(sessionId);
 
@@ -64,6 +142,7 @@ app.post("/message", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`=================================================`);
   console.log(`🚀 exp_portal-mcp-server (HTTP/SSE) active`);
+  console.log(`🔒 Authentication: ENABLED (MCP_API_KEY protected)`);
   console.log(`🌐 Port: ${PORT}`);
   console.log(`📡 SSE Endpoint: http://localhost:${PORT}/sse`);
   console.log(`📩 Message Endpoint: http://localhost:${PORT}/message`);

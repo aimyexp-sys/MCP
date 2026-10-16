@@ -40,6 +40,42 @@ let activeStack  = 'ALL';
 let searchQuery  = '';
 let sortMode     = 'id-asc';
 
+// ── Auth Helpers ─────────────────────────────────────────────
+function getStoredApiKey() {
+  return sessionStorage.getItem('student_api_key') || '';
+}
+
+function setStoredApiKey(key) {
+  if (key) sessionStorage.setItem('student_api_key', key.trim());
+  else sessionStorage.removeItem('student_api_key');
+  updateAuthBtnUI();
+}
+
+function getRequestHeaders() {
+  const key = getStoredApiKey();
+  return key ? { 'X-API-Key': key } : {};
+}
+
+function updateAuthBtnUI() {
+  const authBtn  = document.getElementById('authBtn');
+  const authIcon = document.getElementById('authIcon');
+  const authText = document.getElementById('authText');
+  if (!authBtn) return;
+
+  const key = getStoredApiKey();
+  if (key) {
+    authBtn.classList.add('authenticated');
+    authIcon.textContent = '🔓';
+    authText.textContent = 'Authenticated';
+    authBtn.title = 'Authenticated (Full Contact Access). Click to sign out.';
+  } else {
+    authBtn.classList.remove('authenticated');
+    authIcon.textContent = '🔒';
+    authText.textContent = 'Masked Mode';
+    authBtn.title = 'Personal contact info masked. Click to enter API key.';
+  }
+}
+
 // ── DOM Refs ─────────────────────────────────────────────────
 const studentGrid   = document.getElementById('studentGrid');
 const pagination    = document.getElementById('pagination');
@@ -53,25 +89,54 @@ const modalOverlay  = document.getElementById('modalOverlay');
 const modalBody     = document.getElementById('modalBody');
 const modalClose    = document.getElementById('modalClose');
 const toast         = document.getElementById('toast');
+const authBtn       = document.getElementById('authBtn');
 
 // ── Init ─────────────────────────────────────────────────────
 async function init() {
+  updateAuthBtnUI();
   try {
+    const headers = getRequestHeaders();
     const [studentsRes, statsRes] = await Promise.all([
-      fetch(`${API_BASE}/students`),
-      fetch(`${API_BASE}/stats`),
+      fetch(`${API_BASE}/students`, { headers }),
+      fetch(`${API_BASE}/stats`, { headers }),
     ]);
-    const { data } = await studentsRes.json();
+    const { data, privacy } = await studentsRes.json();
     const { data: stats } = await statsRes.json();
 
     allStudents = data;
     totalBadge.textContent = `${data.length} Students`;
     renderStatsStrip(stats);
     applyFilters();
+
+    if (privacy?.notice && getStoredApiKey()) {
+      showToast('🔓 Authenticated: Full contact details unlocked.');
+    }
   } catch (err) {
     studentGrid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-msg">Cannot reach API at ${API_BASE}.<br/>Make sure the Node.js server is running on port 3000.</div></div>`;
     console.error(err);
   }
+}
+
+if (authBtn) {
+  authBtn.addEventListener('click', () => {
+    const key = getStoredApiKey();
+    if (key) {
+      if (confirm('Sign out of authenticated mode to switch back to privacy-masked contacts?')) {
+        setStoredApiKey('');
+        showToast('🔒 Switched to Privacy-Masked mode');
+        init();
+      }
+    } else {
+      const entered = prompt(
+        'Enter Student API Key to view full unmasked student contacts:\n(Demo key: student-api-secret-key-2026)',
+        'student-api-secret-key-2026'
+      );
+      if (entered) {
+        setStoredApiKey(entered);
+        init();
+      }
+    }
+  });
 }
 
 // ── Stats Strip ───────────────────────────────────────────────
@@ -171,6 +236,10 @@ function buildCard(s, idx) {
       <span class="proficiency-dot ${PROFICIENCY_CLASS[ts.proficiencyLevel] ?? ''}"></span>${ts.stack}
     </span>`).join('');
 
+  const privacyPill = s.isContactMasked
+    ? '<span class="privacy-badge" title="Contact info masked for privacy protection">🔒 Masked</span>'
+    : '<span class="privacy-badge unmasked" title="Authenticated unmasked access">🔓 Verified Contact</span>';
+
   return `
     <article class="student-card" data-id="${s.id}" style="animation-delay:${delay}ms">
       <div class="card-header">
@@ -181,7 +250,7 @@ function buildCard(s, idx) {
         </div>
         <span class="card-id">#${s.id}</span>
       </div>
-      <div class="card-mobile">📱 ${s.mobile}</div>
+      <div class="card-mobile">📱 ${s.mobile} ${privacyPill}</div>
       <div class="card-stacks">${stacks}</div>
     </article>`;
 }
@@ -242,6 +311,10 @@ function openModal(id) {
       </div>`;
   }).join('');
 
+  const privacyNote = s.isContactMasked
+    ? '<span style="font-size:0.75rem;color:var(--accent-amber);margin-left:6px">(🔒 Masked for Privacy)</span>'
+    : '<span style="font-size:0.75rem;color:var(--accent-green);margin-left:6px">(🔓 Verified)</span>';
+
   modalBody.innerHTML = `
     <div class="modal-avatar-row">
       <div class="modal-avatar" style="background:linear-gradient(135deg,${g1},${g2})">${initials}</div>
@@ -252,11 +325,11 @@ function openModal(id) {
     </div>
     <div class="modal-info-grid">
       <div class="info-box">
-        <div class="info-box-label">Email</div>
+        <div class="info-box-label">Email ${privacyNote}</div>
         <div class="info-box-value">${s.email}</div>
       </div>
       <div class="info-box">
-        <div class="info-box-label">Mobile</div>
+        <div class="info-box-label">Mobile ${privacyNote}</div>
         <div class="info-box-value">${s.mobile}</div>
       </div>
       <div class="info-box">

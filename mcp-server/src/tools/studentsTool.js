@@ -38,7 +38,7 @@ export const getStudentsSchema = {
 };
 
 export const getStudentsDescription =
-  "Retrieve student directory records including full contact details (name, email, mobile), enrolled/graduation years, and technical skill profiles with proficiency levels and sub-skills across MERN, MEAN, Python, Android, and iOS stacks. Supports searching, filtering by stack or sub-skill, and pagination.";
+  "Retrieve student directory records including privacy-minimized contact details (masked email and masked mobile number), enrolled/graduation years, and technical skill profiles with proficiency levels and sub-skills across MERN, MEAN, Python, Android, and iOS stacks. Supports searching, filtering by stack or sub-skill, and pagination.";
 
 export async function handleGetStudents(args) {
   try {
