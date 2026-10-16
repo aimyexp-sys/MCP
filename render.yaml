@@ -14,10 +14,12 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
-      - key: STUDENT_API_KEY
-        generateValue: true
       - key: ALLOWED_ORIGINS
-        value: "*"
+        value: "http://localhost:5173,http://localhost:5174,https://students-portal.onrender.com,https://job-portal-web.onrender.com,https://exp-portal-mcp-server.onrender.com"
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_AUDIENCE
+        value: "https://students-server.onrender.com/api"
 
   # -------------------------------------------------------------
   # 2. Student Directory Portal Frontend
@@ -38,6 +40,12 @@ services:
           type: web
           name: students-server
           property: host
+      - key: VITE_AUTH0_DOMAIN
+        sync: false
+      - key: VITE_AUTH0_CLIENT_ID
+        sync: false
+      - key: VITE_AUTH0_AUDIENCE
+        value: "https://students-server.onrender.com/api"
 
   # -------------------------------------------------------------
   # 3. Job Portal API Backend Server
@@ -54,10 +62,12 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
-      - key: JOB_ADMIN_KEY
-        generateValue: true
       - key: ALLOWED_ORIGINS
-        value: "*"
+        value: "http://localhost:5173,http://localhost:5174,https://students-portal.onrender.com,https://job-portal-web.onrender.com,https://exp-portal-mcp-server.onrender.com"
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_AUDIENCE
+        value: "https://job-portal-server.onrender.com/api"
 
   # -------------------------------------------------------------
   # 4. Job Vacancies Web App Frontend
@@ -78,6 +88,12 @@ services:
           type: web
           name: job-portal-server
           property: host
+      - key: VITE_AUTH0_DOMAIN
+        sync: false
+      - key: VITE_AUTH0_CLIENT_ID
+        sync: false
+      - key: VITE_AUTH0_AUDIENCE
+        value: "https://job-portal-server.onrender.com/api"
 
   # -------------------------------------------------------------
   # 5. Model Context Protocol (MCP) Server (HTTP / SSE Transport)
@@ -95,10 +111,12 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
-      - key: MCP_API_KEY
-        value: mcp-secret-key-2026
       - key: ALLOWED_ORIGINS
-        value: "*"
+        value: "http://localhost:5173,http://localhost:5174,https://students-portal.onrender.com,https://job-portal-web.onrender.com,https://exp-portal-mcp-server.onrender.com"
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_AUDIENCE
+        value: "https://exp-portal-mcp-server.onrender.com"
       - key: STUDENTS_API_URL
         fromService:
           type: web
@@ -109,13 +127,3 @@ services:
           type: web
           name: job-portal-server
           property: host
-      - key: STUDENT_API_KEY
-        fromService:
-          type: web
-          name: students-server
-          envVarKey: STUDENT_API_KEY
-      - key: JOB_ADMIN_KEY
-        fromService:
-          type: web
-          name: job-portal-server
-          envVarKey: JOB_ADMIN_KEY

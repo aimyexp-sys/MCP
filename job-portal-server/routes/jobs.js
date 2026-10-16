@@ -4,32 +4,51 @@
 
 const express = require("express");
 const router = express.Router();
-let jobs = require("../data/jobs");
-const { requireAuth, isAuthorized, sanitizeJob } = require("../middleware/security");
+const storage = require("../data/storage");
+const { sanitizeJob } = require("../middleware/security");
+const { requireAuth, optionalAuth } = require("../middleware/auth");
 
 // ────────────────────────────────────────────────────────────
 // GET /api/jobs/auth/status
-//   Check authentication state and mutation privileges
+//   Check OAuth authentication state and mutation privileges
 // ────────────────────────────────────────────────────────────
-router.get("/auth/status", (req, res) => {
-  const authorized = isAuthorized(req);
+router.get("/auth/status", optionalAuth, (req, res) => {
+  const user = req.user;
+  const authenticated = Boolean(user);
+  const scopes = user ? user.scopes : [];
+
   res.status(200).json({
     success: true,
-    authenticated: authorized,
-    role: authorized ? "employer/admin" : "public",
-    canMutateJobs: authorized,
-    recruiterPrivacyStatus: authorized
-      ? "Full recruiter contact details accessible."
+    authenticated,
+    user: user ? { sub: user.sub, scopes: user.scopes } : null,
+    canCreateJobs: scopes.includes("create:jobs"),
+    canDeleteOwnJobs: scopes.includes("delete:own_jobs"),
+    canDeleteAnyJobs: scopes.includes("delete:any_jobs"),
+    recruiterPrivacyStatus: authenticated
+      ? "Authenticated session: authorized recruiter details accessible."
       : "Recruiter personal phone numbers and direct contact names are masked for privacy protection."
   });
 });
 
+// ────────────────────────────────────────────────────────────
+// GET /api/jobs/audit/logs
+//   Retrieve audit trail of job mutations (Admin only)
+// ────────────────────────────────────────────────────────────
+router.get("/audit/logs", requireAuth("delete:any_jobs"), (req, res) => {
+  const logs = storage.getAuditLogs();
+  res.status(200).json({
+    success: true,
+    count: logs.length,
+    data: logs
+  });
+});
+
 // ── GET /api/jobs ─────────────────────────────────────────────
-// Returns the complete list of all 100 job postings in a single request.
-// Also supports optional filtering via query parameters.
-router.get("/", (req, res) => {
+// Returns list of job postings with optional filtering & pagination
+router.get("/", optionalAuth, (req, res) => {
   try {
-    const authorized = isAuthorized(req);
+    const jobs = storage.getJobs();
+    const authorized = Boolean(req.user);
     const { category, techStack, search, jobType, experienceLevel, location, limit, page } = req.query;
 
     let filtered = [...jobs];
@@ -43,14 +62,14 @@ router.get("/", (req, res) => {
       );
     }
 
-    // Filter by Job Type (e.g., Full-Time, Remote, Hybrid, Contract)
+    // Filter by Job Type
     if (jobType) {
       filtered = filtered.filter(job =>
         job.jobType.toLowerCase().includes(jobType.toLowerCase())
       );
     }
 
-    // Filter by Experience Level (e.g., Entry-Level, Mid-Level, Senior, Lead)
+    // Filter by Experience Level
     if (experienceLevel) {
       filtered = filtered.filter(job =>
         job.requirements.experienceLevel.toLowerCase() === experienceLevel.toLowerCase()
@@ -64,7 +83,7 @@ router.get("/", (req, res) => {
       );
     }
 
-    // Free text search (Title, Company, Skills, Description)
+    // Free text search
     if (search) {
       const q = search.toLowerCase();
       filtered = filtered.filter(job =>
@@ -75,7 +94,7 @@ router.get("/", (req, res) => {
       );
     }
 
-    // If explicit pagination parameters are provided
+    // Explicit pagination
     if (page && limit) {
       const p = Math.max(1, parseInt(page, 10));
       const l = Math.max(1, parseInt(limit, 10));
@@ -94,13 +113,13 @@ router.get("/", (req, res) => {
           recruiterContactMasked: !authorized,
           notice: authorized
             ? "Authenticated session: full recruiter contact details provided."
-            : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+            : "Recruiter personal phone numbers and direct contact names are masked."
         },
         data: paginatedData
       });
     }
 
-    // Default: returns complete list (all 100 postings) in a single request
+    // Default: returns complete list
     const sanitizedAll = filtered.map(j => sanitizeJob(j, authorized));
     return res.status(200).json({
       success: true,
@@ -111,7 +130,7 @@ router.get("/", (req, res) => {
         recruiterContactMasked: !authorized,
         notice: authorized
           ? "Authenticated session: full recruiter contact details provided."
-          : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+          : "Recruiter personal phone numbers and direct contact names are masked."
       },
       data: sanitizedAll
     });
@@ -125,9 +144,9 @@ router.get("/", (req, res) => {
 });
 
 // ── GET /api/jobs/categories ──────────────────────────────────
-// Returns summary statistics of jobs categorized across tech stacks
 router.get("/categories", (req, res) => {
   try {
+    const jobs = storage.getJobs();
     const summary = {};
     jobs.forEach(job => {
       const stack = job.techStack || job.category;
@@ -167,10 +186,10 @@ router.get("/categories", (req, res) => {
 });
 
 // ── GET /api/jobs/category/:categoryName ──────────────────────
-// Returns all jobs for a specific tech stack category
-router.get("/category/:categoryName", (req, res) => {
+router.get("/category/:categoryName", optionalAuth, (req, res) => {
   const { categoryName } = req.params;
-  const authorized = isAuthorized(req);
+  const authorized = Boolean(req.user);
+  const jobs = storage.getJobs();
   const matched = jobs.filter(job =>
     job.category.toLowerCase() === categoryName.toLowerCase() ||
     job.techStack.toLowerCase() === categoryName.toLowerCase()
@@ -180,7 +199,7 @@ router.get("/category/:categoryName", (req, res) => {
     return res.status(404).json({
       success: false,
       error: "Category Not Found",
-      message: `No job postings found for tech category '${categoryName}'. Available: MERN, MEAN, Python/Django, Android, iOS, DevOps / Cloud, AI / ML & Data, Java / Spring Boot, Flutter / Cross-Platform`
+      message: `No job postings found for tech category '${categoryName}'.`
     });
   }
 
@@ -200,10 +219,10 @@ router.get("/category/:categoryName", (req, res) => {
 });
 
 // ── GET /api/jobs/:id ─────────────────────────────────────────
-// Returns a single job posting by ID
-router.get("/:id", (req, res) => {
+router.get("/:id", optionalAuth, (req, res) => {
   const { id } = req.params;
-  const authorized = isAuthorized(req);
+  const authorized = Boolean(req.user);
+  const jobs = storage.getJobs();
   const job = jobs.find(j => j.id.toLowerCase() === id.toLowerCase());
 
   if (!job) {
@@ -220,15 +239,15 @@ router.get("/:id", (req, res) => {
       recruiterContactMasked: !authorized,
       notice: authorized
         ? "Authenticated session: full recruiter contact details provided."
-        : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+        : "Recruiter personal phone numbers and direct contact names are masked."
     },
     data: sanitizeJob(job, authorized)
   });
 });
 
 // ── POST /api/jobs ────────────────────────────────────────────
-// Create a new job vacancy posting [Protected: requires valid API key]
-router.post("/", requireAuth, (req, res) => {
+// Create a new job vacancy posting [SEC-07: Requires Auth0 Bearer token with 'create:jobs']
+router.post("/", requireAuth("create:jobs"), (req, res) => {
   const {
     title,
     category,
@@ -249,12 +268,15 @@ router.post("/", requireAuth, (req, res) => {
     });
   }
 
+  const jobs = storage.getJobs();
   const newId = `JOB-${String(jobs.length + 1).padStart(3, "0")}`;
   const newJob = {
     id: newId,
     title,
     category: category || techStack || "General Tech",
     techStack: techStack || category || "General Tech",
+    creatorSub: req.user.sub, // Persist creator Auth0 sub (SEC-07)
+    createdAt: new Date().toISOString(),
     company: {
       name: company.name,
       industry: company.industry || "Technology",
@@ -282,7 +304,18 @@ router.post("/", requireAuth, (req, res) => {
     status: "Active"
   };
 
-  jobs.unshift(newJob);
+  storage.addJob(newJob);
+
+  // Record mutation audit event (SEC-07)
+  storage.recordAudit({
+    action: "JOB_CREATED",
+    jobId: newJob.id,
+    jobTitle: newJob.title,
+    userSub: req.user.sub,
+    userScopes: req.user.scopes,
+    ip: req.ip,
+    userAgent: req.headers["user-agent"]
+  });
 
   return res.status(201).json({
     success: true,
@@ -292,12 +325,25 @@ router.post("/", requireAuth, (req, res) => {
 });
 
 // ── DELETE /api/jobs/:id ──────────────────────────────────────
-// Delete a job vacancy posting [Protected: requires valid API key]
-router.delete("/:id", requireAuth, (req, res) => {
+// Delete a job vacancy posting [SEC-07: Requires 'delete:any_jobs' or ownership-checked 'delete:own_jobs']
+router.delete("/:id", requireAuth(), (req, res) => {
   const { id } = req.params;
-  const index = jobs.findIndex(j => j.id.toLowerCase() === id.toLowerCase());
+  const user = req.user;
+  const hasDeleteAny = user.scopes.includes("delete:any_jobs");
+  const hasDeleteOwn = user.scopes.includes("delete:own_jobs");
 
-  if (index === -1) {
+  if (!hasDeleteAny && !hasDeleteOwn) {
+    return res.status(403).json({
+      success: false,
+      error: "Forbidden",
+      message: "Insufficient scope: requires 'delete:own_jobs' or 'delete:any_jobs'."
+    });
+  }
+
+  const jobs = storage.getJobs();
+  const job = jobs.find(j => j.id.toLowerCase() === id.toLowerCase());
+
+  if (!job) {
     return res.status(404).json({
       success: false,
       error: "Job Not Found",
@@ -305,7 +351,30 @@ router.delete("/:id", requireAuth, (req, res) => {
     });
   }
 
-  const removed = jobs.splice(index, 1)[0];
+  // Ownership check: if user only has delete:own_jobs, verify creatorSub matches user.sub
+  if (!hasDeleteAny && hasDeleteOwn) {
+    if (!job.creatorSub || job.creatorSub !== user.sub) {
+      return res.status(403).json({
+        success: false,
+        error: "Forbidden",
+        message: "Ownership violation: You can only delete job postings created by your account."
+      });
+    }
+  }
+
+  const removed = storage.deleteJob(id);
+
+  // Record mutation audit event (SEC-07)
+  storage.recordAudit({
+    action: "JOB_DELETED",
+    jobId: id,
+    jobTitle: job.title,
+    userSub: user.sub,
+    userScopes: user.scopes,
+    ip: req.ip,
+    userAgent: req.headers["user-agent"]
+  });
+
   return res.status(200).json({
     success: true,
     message: `Job posting '${id}' deleted successfully.`,

@@ -8,6 +8,7 @@ const require = createRequire(import.meta.url);
 
 // Resolve paths to the data files in the sibling directories
 const studentsDataPath = path.resolve(__dirname, "../../students-server/data/students.js");
+const jobsPersistedPath = path.resolve(__dirname, "../../job-portal-server/data/jobs-persisted.json");
 const jobsDataPath = path.resolve(__dirname, "../../job-portal-server/data/jobs.js");
 
 let cachedStudents = null;
@@ -69,8 +70,8 @@ export async function getStudentsData() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
     const headers = {};
-    if (process.env.STUDENT_API_KEY) {
-      headers["X-API-Key"] = process.env.STUDENT_API_KEY;
+    if (process.env.AUTH0_SERVICE_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.AUTH0_SERVICE_TOKEN}`;
     }
     const res = await fetch(STUDENTS_API_URL, { signal: controller.signal, headers });
     clearTimeout(timeoutId);
@@ -104,8 +105,8 @@ export async function getJobsData() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
     const headers = {};
-    if (process.env.JOB_ADMIN_KEY) {
-      headers["X-API-Key"] = process.env.JOB_ADMIN_KEY;
+    if (process.env.AUTH0_SERVICE_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.AUTH0_SERVICE_TOKEN}`;
     }
     const res = await fetch(JOBS_API_URL, { signal: controller.signal, headers });
     clearTimeout(timeoutId);
@@ -122,8 +123,13 @@ export async function getJobsData() {
   }
 
   if (!cachedJobs) {
-    const raw = require(jobsDataPath);
-    cachedJobs = Array.isArray(raw) ? raw : (raw.jobs || []);
+    try {
+      const raw = require(jobsPersistedPath);
+      cachedJobs = Array.isArray(raw) ? raw : (raw.jobs || []);
+    } catch (e) {
+      const raw = require(jobsDataPath);
+      cachedJobs = Array.isArray(raw) ? raw : (raw.jobs || []);
+    }
   }
   return cachedJobs;
 }

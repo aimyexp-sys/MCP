@@ -605,7 +605,8 @@
 }
 
 /* ── Modal & Drawer Overlays ──────────────────────────────── */
-.modal-backdrop {
+.modal-backdrop,
+.modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);

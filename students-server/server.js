@@ -9,24 +9,31 @@ const morgan  = require("morgan");
 const studentRoutes = require("./routes/students");
 const statsRoutes   = require("./routes/stats");
 
-const { getCorsOptions, isAuthorized } = require("./middleware/security");
+const { getCorsOptions } = require("./middleware/security");
+const { optionalAuth } = require("./middleware/auth");
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ───────────────────────────────────────────────
 app.use(cors(getCorsOptions()));
-app.use(morgan("dev"));
+
+// SEC-06: Custom Morgan logger that redacts Authorization Bearer tokens
+morgan.token("authorization", (req) => {
+  return req.headers["authorization"] ? "Bearer [REDACTED]" : "-";
+});
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms [Auth: :authorization]"));
 app.use(express.json());
 
 // ── Health Check & API Directory ─────────────────────────────
-app.get("/", (req, res) => {
+app.get("/", optionalAuth, (req, res) => {
   res.status(200).json({
     message: "🎓 Student API Server is running!",
-    version: "1.0.0",
+    version: "2.0.0",
     security: {
-      authHeader: "X-API-Key or Authorization: Bearer <key>",
-      authenticated: isAuthorized(req),
+      authHeader: "Authorization: Bearer <Auth0_Token>",
+      authenticated: Boolean(req.user),
+      user: req.user ? { sub: req.user.sub, scopes: req.user.scopes } : null,
       privacyPolicy: "Personal student contact details (email, mobile) are masked on unauthenticated requests."
     },
     endpoints: {

@@ -24,6 +24,16 @@ import {
   Trash2
 } from 'lucide-react';
 import { fallbackJobs } from './data/fallbackJobs';
+import {
+  isAuth0Configured,
+  getStoredToken,
+  getStoredUser,
+  setSession,
+  loginWithAuth0,
+  handleAuthCallback,
+  clearSession,
+  createLocalDevToken
+} from './auth';
 import './App.css';
 
 export default function App() {
@@ -31,7 +41,20 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [apiConnected, setApiConnected] = useState(false);
   const [theme, setTheme] = useState('dark');
-  const [adminApiKey, setAdminApiKey] = useState(() => sessionStorage.getItem('job_admin_key') || '');
+  const [authToken, setAuthToken] = useState(() => getStoredToken());
+  const [authUser, setAuthUser] = useState(() => getStoredUser());
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [manualToken, setManualToken] = useState('');
+
+  // Handle Auth0 redirect callback (?code=...) on mount
+  useEffect(() => {
+    handleAuthCallback().then((handled) => {
+      if (handled) {
+        setAuthToken(getStoredToken());
+        setAuthUser(getStoredUser());
+      }
+    });
+  }, []);
 
   // Filter States
   const [selectedStack, setSelectedStack] = useState('All');
@@ -71,12 +94,12 @@ export default function App() {
     return url;
   }
 
-  // Fetch Jobs from backend API (with auth headers if configured)
+  // Fetch Jobs from backend API (with Auth0 Bearer token if signed in)
   useEffect(() => {
     async function fetchJobs() {
       setLoading(true);
       const API_BASE = getApiBase();
-      const headers = adminApiKey ? { 'X-API-Key': adminApiKey } : {};
+      const headers = authToken ? { 'Authorization': `Bearer ${authToken}` } : {};
 
       try {
         const res = await fetch(`${API_BASE}/jobs`, { headers });
@@ -114,7 +137,7 @@ export default function App() {
     }
 
     fetchJobs();
-  }, [adminApiKey]);
+  }, [authToken]);
 
   // Compute category counts
   const categoryCounts = useMemo(() => {
@@ -223,30 +246,34 @@ export default function App() {
 
           <button 
             className="btn-secondary" 
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', padding: '0.45rem 0.85rem' }}
-            onClick={() => {
-              if (adminApiKey) {
-                if (confirm('Sign out of Admin / Employer mode to switch back to privacy-masked contacts?')) {
-                  setAdminApiKey('');
-                  sessionStorage.removeItem('job_admin_key');
+            style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              fontSize: '0.82rem', 
+              padding: '0.45rem 0.95rem',
+              fontWeight: 700,
+              background: authToken ? 'rgba(16, 185, 129, 0.15)' : 'linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(168, 85, 247, 0.22))',
+              borderColor: authToken ? 'rgba(16, 185, 129, 0.5)' : 'rgba(168, 85, 247, 0.5)',
+              color: authToken ? '#10b981' : '#fff',
+              boxShadow: authToken ? 'none' : '0 2px 8px rgba(124, 110, 255, 0.2)'
+            }}
+            onClick={async () => {
+              if (authToken) {
+                if (confirm('Sign out of Auth0 session?')) {
+                  clearSession();
+                  setAuthToken('');
+                  setAuthUser(null);
                 }
               } else {
-                const key = prompt(
-                  'Enter Employer / Admin API Key to unlock full recruiter contacts and vacancy mutations:\n(Demo key: job-admin-secret-key-2026)',
-                  'job-admin-secret-key-2026'
-                );
-                if (key) {
-                  const clean = key.trim();
-                  setAdminApiKey(clean);
-                  sessionStorage.setItem('job_admin_key', clean);
-                }
+                setShowAuthModal(true);
               }
             }}
-            title={adminApiKey ? "Authenticated Employer/Admin. Click to sign out." : "Authenticate as Employer/Admin"}
+            title={authToken ? "Signed in with Auth0. Click to sign out." : "Log In with Auth0 as Employer/Admin"}
             id="auth-toggle-btn"
           >
-            {adminApiKey ? <ShieldCheck size={16} color="#10b981" /> : <ShieldAlert size={16} />}
-            <span>{adminApiKey ? 'Admin Unlocked' : 'Masked Mode'}</span>
+            {authToken ? <ShieldCheck size={16} color="#10b981" /> : <ShieldAlert size={16} />}
+            <span>{authToken ? (authUser?.name ? `${authUser.name} (Sign Out)` : 'Auth0 Employer (Sign Out)') : 'Log In with Auth0'}</span>
           </button>
 
           <button 
@@ -610,7 +637,7 @@ export default function App() {
               >
                 <Share2 size={16} /> Share
               </button>
-              {adminApiKey && (
+              {authToken && (
                 <button 
                   className="btn-secondary"
                   style={{ color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.4)' }}
@@ -620,7 +647,7 @@ export default function App() {
                     try {
                       const res = await fetch(`${API_BASE}/jobs/${activeJobModal.id}`, {
                         method: 'DELETE',
-                        headers: { 'X-API-Key': adminApiKey }
+                        headers: { 'Authorization': `Bearer ${authToken}` }
                       });
                       if (res.ok) {
                         setJobs(prev => prev.filter(j => j.id !== activeJobModal.id));
@@ -634,7 +661,7 @@ export default function App() {
                       alert(`Error connecting to server: ${e.message}`);
                     }
                   }}
-                  title="Delete this vacancy posting (Authenticated Admin Action)"
+                  title="Delete this vacancy posting (Authenticated Action)"
                 >
                   <Trash2 size={16} /> Delete
                 </button>
@@ -778,7 +805,6 @@ export default function App() {
             <form onSubmit={async (e) => {
               e.preventDefault();
               const form = e.target;
-              const adminKey = form.adminKey.value.trim();
               const API_BASE = getApiBase();
 
               const newJob = {
@@ -809,12 +835,17 @@ export default function App() {
                 salary: form.salary.value
               };
 
+              if (!authToken) {
+                alert('Authentication required: Please sign in with Auth0 to post a vacancy.');
+                return;
+              }
+
               try {
                 const res = await fetch(`${API_BASE}/jobs`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
-                    'X-API-Key': adminKey
+                    'Authorization': `Bearer ${authToken}`
                   },
                   body: JSON.stringify(newJob)
                 });
@@ -823,42 +854,29 @@ export default function App() {
                   const created = await res.json();
                   const saved = created.data;
                   setJobs([saved, ...jobs]);
-                  if (!adminApiKey) {
-                    setAdminApiKey(adminKey);
-                    sessionStorage.setItem('job_admin_key', adminKey);
-                  }
                   setIsPostingModal(false);
                   alert(`Job '${saved.title}' posted and authenticated successfully on server!`);
                 } else {
                   const errData = await res.json().catch(() => ({}));
-                  alert(`Posting rejected by server: ${errData.message || 'Unauthorized API key'}`);
+                  alert(`Posting rejected by server: ${errData.message || 'Unauthorized action'}`);
                 }
               } catch (err) {
-                // Offline fallback
-                const fallbackCreated = {
-                  ...newJob,
-                  id: `JOB-${String(jobs.length + 1).padStart(3, '0')}`,
-                  postedDate: new Date().toISOString().split('T')[0],
-                  applicationDeadline: '2026-12-31',
-                  status: 'Active'
-                };
-                setJobs([fallbackCreated, ...jobs]);
-                setIsPostingModal(false);
-                alert(`Job posted in local offline mode.`);
+                alert(`Error connecting to server: ${err.message}`);
               }
             }}>
-              <div className="form-group" style={{ marginBottom: '1rem' }}>
-                <label className="form-label">
-                  Admin / Employer API Key * <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>(Required to authorize posting)</span>
-                </label>
-                <input
-                  name="adminKey"
-                  defaultValue={adminApiKey || "job-admin-secret-key-2026"}
-                  required
-                  className="form-input"
-                  placeholder="e.g. job-admin-secret-key-2026"
-                />
-              </div>
+              {!authToken && (
+                <div style={{ padding: '0.85rem', marginBottom: '1rem', borderRadius: '8px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', fontSize: '0.85rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                  <span>⚠️ You must be signed in with Auth0 to publish a vacancy (SEC-07).</span>
+                  <button type="button" className="btn-primary" style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }} onClick={() => setShowAuthModal(true)}>
+                    Log In with Auth0
+                  </button>
+                </div>
+              )}
+              {authToken && (
+                <div style={{ padding: '0.65rem 0.85rem', marginBottom: '1rem', borderRadius: '8px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <ShieldCheck size={16} /> Authenticated as {authUser?.name || authUser?.sub || 'Authorized Employer'}
+                </div>
+              )}
 
               <div className="form-grid-2">
                 <div className="form-group">
@@ -957,6 +975,117 @@ export default function App() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── Auth0 Login Modal ─────────────────────────────────── */}
+      {showAuthModal && (
+        <div className="modal-backdrop" onClick={() => setShowAuthModal(false)}>
+          <div className="modal-content" style={{ maxWidth: '480px' }} onClick={e => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={() => setShowAuthModal(false)}>
+              <X size={18} />
+            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.25rem' }}>
+              <div style={{ background: 'rgba(99, 102, 241, 0.2)', padding: '8px', borderRadius: '8px' }}>
+                <ShieldCheck size={20} color="#818cf8" />
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800 }}>Auth0 Employer Login</h3>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Authenticate with Auth0 to post vacancies & view recruiter contacts</div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1rem 0 0.5rem 0' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.04)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '12px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Status:</span>
+                  <span style={{ background: 'rgba(247, 168, 79, 0.2)', color: '#f59e0b', padding: '2px 8px', borderRadius: '100px', fontWeight: 700, fontSize: '0.72rem' }}>
+                    🔒 Fail-Closed Protection (SEC-05)
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '6px', lineHeight: '1.4' }}>
+                  Per SEC-05 & SEC-07, mutations require verified Auth0 Bearer tokens. All demo secrets have been removed.
+                </div>
+              </div>
+
+              {isAuth0Configured() ? (
+                <button
+                  type="button"
+                  className="btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', padding: '0.75rem', marginBottom: '0.75rem', fontSize: '0.92rem' }}
+                  onClick={async () => {
+                    try {
+                      await loginWithAuth0();
+                    } catch (err) {
+                      alert(`Auth0 Error: ${err.message}`);
+                    }
+                  }}
+                >
+                  🚀 Continue to Auth0 Login (PKCE)
+                </button>
+              ) : (
+                <>
+                  <div style={{ background: 'rgba(99, 102, 241, 0.08)', border: '1px solid rgba(99, 102, 241, 0.25)', borderRadius: '8px', padding: '10px', marginBottom: '14px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                    💡 <strong>Production Setup</strong>: Set <code>VITE_AUTH0_DOMAIN</code> and <code>VITE_AUTH0_CLIENT_ID</code> in <code>.env</code> for live cloud Auth0 redirect.
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    style={{ width: '100%', justifyContent: 'center', padding: '0.75rem', marginBottom: '14px', fontSize: '0.9rem', background: 'linear-gradient(135deg, #10b981, #059669)', borderColor: '#10b981' }}
+                    onClick={async () => {
+                      try {
+                        const token = await createLocalDevToken();
+                        setSession(token, { name: 'Demo Employer' });
+                        setAuthToken(token);
+                        setAuthUser({ name: 'Demo Employer' });
+                        setShowAuthModal(false);
+                      } catch (err) {
+                        alert(`Error: ${err.message}`);
+                      }
+                    }}
+                  >
+                    ⚡ Sign In as Demo Employer (Local Dev)
+                  </button>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>or paste bearer token</span>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
+                  </div>
+
+                  <div style={{ marginBottom: '10px' }}>
+                    <input
+                      type="text"
+                      className="form-input"
+                      placeholder="Paste Auth0 Bearer Token (JWT)..."
+                      value={manualToken}
+                      onChange={e => setManualToken(e.target.value)}
+                      style={{ fontSize: '0.78rem', fontFamily: 'monospace' }}
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    style={{ width: '100%', justifyContent: 'center', padding: '0.6rem' }}
+                    onClick={() => {
+                      if (!manualToken.trim()) {
+                        alert('Please enter a valid token');
+                        return;
+                      }
+                      setSession(manualToken.trim(), { name: 'Verified Token' });
+                      setAuthToken(manualToken.trim());
+                      setAuthUser({ name: 'Verified Token' });
+                      setShowAuthModal(false);
+                    }}
+                  >
+                    Apply Bearer Token
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

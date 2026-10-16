@@ -279,53 +279,55 @@ This repository includes a ready-to-use **Render Blueprint** (`render.yaml`) tha
 
 ### Method 2: Connecting Claude Desktop to Deployed Render MCP
 
-Once deployed, your MCP server runs on HTTP / Server-Sent Events (SSE) protected by API Key authentication:
+Once deployed, your MCP server runs on HTTP / Server-Sent Events (SSE) protected by Auth0 OAuth 2.0 authentication with OAuth discovery and Dynamic Client Registration:
 
 ```json
 {
   "mcpServers": {
     "exp_portal-mcp-server": {
-      "url": "https://exp-portal-mcp-server.onrender.com/sse?apiKey=mcp-secret-key-2026"
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://exp-portal-mcp-server.onrender.com/sse"
+      ]
     }
   }
 }
 ```
-*(Replace `https://exp-portal-mcp-server.onrender.com` with your actual Render service URL and use your configured `MCP_API_KEY`).*
+*(Compatible clients like `mcp-remote` / Claude discover OAuth metadata via `/.well-known/oauth-protected-resource`, perform Auth0 login, and send `Authorization: Bearer <access_token>`).*
 
 ---
 
 ## 🔐 Security, Authentication & Data Privacy
 
-This project implements strict access controls, CORS restrictions, and personal data minimization:
+This project implements enterprise-grade Auth0 OAuth 2.0 access controls, CORS restrictions, persistent job mutations, and personal data minimization:
 
-### 1. Authentication & Mutation Controls
-- **Job Posting Mutations**:
-  - Creating (`POST /api/jobs`) and deleting (`DELETE /api/jobs/:id`) vacancies requires authentication.
-  - Unauthenticated requests are rejected with `401 Unauthorized`.
-  - Configurable via `JOB_ADMIN_KEY` (Default: `job-admin-secret-key-2026`).
-  - Auth header: `X-API-Key: <key>` or `Authorization: Bearer <key>`.
-- **Hosted MCP Endpoint Security**:
-  - The hosted HTTP/SSE transport (`/sse`, `/message`) enforces authentication.
-  - Accepts `X-API-Key` header, `Authorization: Bearer <key>`, or `?apiKey=<key>` query parameter.
-  - Configurable via `MCP_API_KEY` (Default: `mcp-secret-key-2026`).
-- **Student API Access Control**:
-  - Configurable via `STUDENT_API_KEY` (Default: `student-api-secret-key-2026`).
-  - Public requests receive privacy-masked records. Authorized recruiters/admins unlock unmasked contacts.
+### 1. Auth0 OAuth 2.0 Authentication (SEC-01, SEC-05, SEC-08)
+- **Zero Static Keys / Fail-Closed**: All fallback secrets (`MCP_API_KEY`, `JOB_ADMIN_KEY`, `STUDENT_API_KEY`) and query parameters (`?apiKey=...`) have been eliminated.
+- **Protected Resource Metadata (RFC 9470)**: Published at `/.well-known/oauth-protected-resource` and challenge sent via `WWW-Authenticate: Bearer` upon unauthenticated access.
+- **Dynamic Client Registration (RFC 7591)**: Published at `POST /register` with least-privilege default scopes (`read:students`, `read:jobs`).
+- **JWT Verification**: Validates JWT signature via Auth0 JWKS (`/.well-known/jwks.json`), issuer, audience, expiration, and scopes.
 
-### 2. Personal Data Minimization (Privacy Shield)
-- **Student Contacts**:
-  - Student emails (e.g. `aa***5@outlook.com`) and mobile numbers (e.g. `+91 77*****113`) are masked by default on public endpoints and in `get_students` MCP tool output.
-  - Full details are only accessible to authorized consumers supplying valid credentials.
-- **Recruiter Contacts**:
-  - Recruiter personal phone numbers and direct personal names are protected on public endpoints and in `get_jobs` MCP tool output.
-  - Public listings provide company careers email and website, keeping recruiter personal numbers private.
+### 2. Job Mutations, Ownership & Audit Trail (SEC-07)
+- **Scope-Enforced Mutations**:
+  - `POST /api/jobs`: Requires `create:jobs` scope. Attaches creator Auth0 `sub` and persists to disk.
+  - `DELETE /api/jobs/:id`: Requires admin `delete:any_jobs` or ownership-checked `delete:own_jobs` (`job.creatorSub === req.user.sub`).
+- **Persistence Across Restarts**: Postings and their creators are persisted to `data/jobs-persisted.json` so additions and deletions survive restarts.
+- **Mutation Audit Trail**: Every job creation and deletion is recorded in `data/audit-log.json` with timestamp, action, creator `sub`, scopes, and client IP.
 
-### 3. Strict CORS Policies
-- Wildcard CORS (`*`) is restricted.
-- All services enforce strict origin allowlists configurable via `ALLOWED_ORIGINS` (comma-separated origins).
-- Preflight `OPTIONS` and standard allowed headers (`Content-Type`, `Authorization`, `X-API-Key`) are supported.
+### 3. Strict CORS Policies (SEC-03)
+- Wildcard CORS (`*`) is strictly rejected.
+- Exact allowed origins are configured for each portal (`ALLOWED_ORIGINS`).
+- Allowed headers: `["Content-Type", "Authorization"]`.
+- Credentialed CORS is disabled (`credentials: false`). Non-browser calls without `Origin` still require authentication.
 
-### 4. Running the Security Test Suite
+### 4. Credential Security & Log Redaction (SEC-06)
+- Tokens are accepted exclusively via the `Authorization: Bearer <token>` header.
+- Query string credentials (`?apiKey=...`) are completely ignored and do not authenticate.
+- Loggers automatically redact `Authorization` headers (`Bearer [REDACTED]`).
+
+### 5. Running the Security Test Suite
 Run the end-to-end automated security verification:
 
 ```bash

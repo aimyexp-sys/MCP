@@ -8,25 +8,32 @@ const morgan  = require("morgan");
 
 const jobsRoutes = require("./routes/jobs");
 
-const { getCorsOptions, isAuthorized } = require("./middleware/security");
+const { getCorsOptions } = require("./middleware/security");
+const { optionalAuth } = require("./middleware/auth");
 
 const app  = express();
 const PORT = process.env.PORT || 4000;
 
 // ── Global Middleware ────────────────────────────────────────
 app.use(cors(getCorsOptions()));
-app.use(morgan("dev"));
+
+// SEC-06: Custom Morgan logger that redacts Authorization Bearer tokens
+morgan.token("authorization", (req) => {
+  return req.headers["authorization"] ? "Bearer [REDACTED]" : "-";
+});
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms [Auth: :authorization]"));
 app.use(express.json());
 
 // ── Root / Health & API Directory ────────────────────────────
-app.get("/", (req, res) => {
+app.get("/", optionalAuth, (req, res) => {
   res.status(200).json({
     message: "🚀 Job Portal REST API Backend is running!",
-    version: "1.0.0",
+    version: "2.0.0",
     description: "Backend service delivering 100+ realistic tech job vacancies categorized by modern tech stacks.",
     security: {
-      authHeader: "X-API-Key or Authorization: Bearer <key>",
-      authenticated: isAuthorized(req),
+      authHeader: "Authorization: Bearer <Auth0_Token>",
+      authenticated: Boolean(req.user),
+      user: req.user ? { sub: req.user.sub, scopes: req.user.scopes } : null,
       mutationAuthRequired: true,
       recruiterPrivacyPolicy: "Recruiter personal phone numbers and direct contact names are masked on public endpoints."
     },

@@ -3,6 +3,17 @@
 //  Connects to Student API at http://localhost:3000
 // ============================================================
 
+import {
+  isAuth0Configured,
+  getStoredToken,
+  getStoredUser,
+  setSession,
+  loginWithAuth0,
+  handleAuthCallback,
+  clearSession,
+  createLocalDevToken
+} from './auth.js';
+
 function resolveApiBase() {
   let url = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api');
   if (!url.startsWith('http') && !url.startsWith('/')) url = `https://${url}`;
@@ -40,20 +51,11 @@ let activeStack  = 'ALL';
 let searchQuery  = '';
 let sortMode     = 'id-asc';
 
-// ── Auth Helpers ─────────────────────────────────────────────
-function getStoredApiKey() {
-  return sessionStorage.getItem('student_api_key') || '';
-}
 
-function setStoredApiKey(key) {
-  if (key) sessionStorage.setItem('student_api_key', key.trim());
-  else sessionStorage.removeItem('student_api_key');
-  updateAuthBtnUI();
-}
 
 function getRequestHeaders() {
-  const key = getStoredApiKey();
-  return key ? { 'X-API-Key': key } : {};
+  const token = getStoredToken();
+  return token ? { 'Authorization': `Bearer ${token}` } : {};
 }
 
 function updateAuthBtnUI() {
@@ -62,17 +64,115 @@ function updateAuthBtnUI() {
   const authText = document.getElementById('authText');
   if (!authBtn) return;
 
-  const key = getStoredApiKey();
-  if (key) {
+  const token = getStoredToken();
+  const user = getStoredUser();
+
+  if (token) {
     authBtn.classList.add('authenticated');
     authIcon.textContent = '🔓';
-    authText.textContent = 'Authenticated';
-    authBtn.title = 'Authenticated (Full Contact Access). Click to sign out.';
+    authText.textContent = user?.name ? `${user.name} (Sign Out)` : 'Logged In (Sign Out)';
+    authBtn.title = 'Signed in with Auth0. Click to sign out.';
   } else {
     authBtn.classList.remove('authenticated');
     authIcon.textContent = '🔒';
-    authText.textContent = 'Masked Mode';
-    authBtn.title = 'Personal contact info masked. Click to enter API key.';
+    authText.textContent = 'Log In with Auth0';
+    authBtn.title = 'Click to log in with Auth0 and view unmasked student contacts.';
+  }
+}
+
+function openAuthModal() {
+  modalBody.innerHTML = `
+    <div style="padding: 6px 0;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+        <div style="font-size:2rem;background:rgba(99,102,241,0.18);padding:12px;border-radius:12px;border:1px solid rgba(99,102,241,0.35);">🔐</div>
+        <div>
+          <h3 style="margin:0;font-size:1.25rem;font-weight:700;color:#fff;">Auth0 OAuth 2.0 Login</h3>
+          <p style="margin:4px 0 0;font-size:0.8rem;color:var(--text-muted);">Authenticate with Auth0 to access unmasked student emails and mobile numbers</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;margin-bottom:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;">
+          <span style="color:var(--text-secondary);font-weight:600;">Current State:</span>
+          <span style="background:rgba(247,168,79,0.18);color:var(--accent-amber);padding:4px 12px;border-radius:100px;font-weight:700;font-size:0.75rem;">🔒 Privacy Masked (Fail-Closed)</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;line-height:1.45;">
+          Per <strong>SEC-05</strong>, all hardcoded secrets and demo keys have been removed. Unauthenticated requests always fail closed to protect student personal data.
+        </div>
+      </div>
+
+      ${isAuth0Configured() ? `
+        <button id="auth0RedirectBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#4f8ef7,#7c6eff);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 14px rgba(99,102,241,0.35);">
+          🚀 Continue to Auth0 Login (PKCE)
+        </button>
+      ` : `
+        <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;padding:12px;margin-bottom:16px;font-size:0.8rem;color:var(--text-secondary);">
+          💡 <strong>Production Setup</strong>: Set <code>VITE_AUTH0_DOMAIN</code> and <code>VITE_AUTH0_CLIENT_ID</code> in <code>.env</code> for live cloud Auth0 redirect.
+        </div>
+
+        <button id="auth0MockBtn" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;padding:13px;border-radius:10px;font-weight:700;font-size:0.92rem;cursor:pointer;margin-bottom:16px;box-shadow:0 4px 14px rgba(16,185,129,0.25);">
+          ⚡ Sign In with Demo Recruiter Token (Local Dev)
+        </button>
+
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="flex:1;height:1px;background:var(--border-subtle);"></div>
+          <span style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;font-weight:600;">or paste bearer token</span>
+          <div style="flex:1;height:1px;background:var(--border-subtle);"></div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <input id="tokenInput" type="text" placeholder="Paste Auth0 Bearer Token (JWT)..." style="width:100%;box-sizing:border-box;background:var(--bg-primary);border:1px solid var(--border-mid);color:#fff;padding:10px 14px;border-radius:8px;font-size:0.8rem;font-family:monospace;" />
+        </div>
+
+        <button id="applyTokenBtn" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid var(--border-mid);color:#fff;padding:10px;border-radius:8px;font-weight:600;font-size:0.85rem;cursor:pointer;">
+          Apply Bearer Token
+        </button>
+      `}
+    </div>
+  `;
+
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const redirectBtn = document.getElementById('auth0RedirectBtn');
+  if (redirectBtn) {
+    redirectBtn.addEventListener('click', async () => {
+      try {
+        await loginWithAuth0();
+      } catch (err) {
+        showToast(`⚠️ Auth0 Error: ${err.message}`);
+      }
+    });
+  }
+
+  const mockBtn = document.getElementById('auth0MockBtn');
+  if (mockBtn) {
+    mockBtn.addEventListener('click', async () => {
+      try {
+        const token = await createLocalDevToken();
+        setSession(token, { name: 'Demo Recruiter' });
+        closeModal();
+        showToast('🔓 Authenticated via Auth0! Full contact details unlocked.');
+        init();
+      } catch (err) {
+        showToast(`⚠️ Error: ${err.message}`);
+      }
+    });
+  }
+
+  const applyBtn = document.getElementById('applyTokenBtn');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      const val = document.getElementById('tokenInput').value.trim();
+      if (!val) {
+        showToast('Please enter a valid JWT token.');
+        return;
+      }
+      setSession(val, { name: 'Verified Token' });
+      closeModal();
+      showToast('🔓 Token applied. Refreshing directory...');
+      init();
+    });
   }
 }
 
@@ -93,7 +193,9 @@ const authBtn       = document.getElementById('authBtn');
 
 // ── Init ─────────────────────────────────────────────────────
 async function init() {
+  await handleAuthCallback();
   updateAuthBtnUI();
+
   try {
     const headers = getRequestHeaders();
     const [studentsRes, statsRes] = await Promise.all([
@@ -108,8 +210,8 @@ async function init() {
     renderStatsStrip(stats);
     applyFilters();
 
-    if (privacy?.notice && getStoredApiKey()) {
-      showToast('🔓 Authenticated: Full contact details unlocked.');
+    if (privacy?.notice && getStoredToken()) {
+      showToast('🔓 Authenticated via Auth0: Full contact details unlocked.');
     }
   } catch (err) {
     studentGrid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-msg">Cannot reach API at ${API_BASE}.<br/>Make sure the Node.js server is running on port 3000.</div></div>`;
@@ -118,23 +220,16 @@ async function init() {
 }
 
 if (authBtn) {
-  authBtn.addEventListener('click', () => {
-    const key = getStoredApiKey();
-    if (key) {
-      if (confirm('Sign out of authenticated mode to switch back to privacy-masked contacts?')) {
-        setStoredApiKey('');
-        showToast('🔒 Switched to Privacy-Masked mode');
+  authBtn.addEventListener('click', async () => {
+    const token = getStoredToken();
+    if (token) {
+      if (confirm('Sign out of Auth0 session?')) {
+        clearSession();
+        showToast('🔒 Signed out. Returned to Privacy-Masked mode.');
         init();
       }
     } else {
-      const entered = prompt(
-        'Enter Student API Key to view full unmasked student contacts:\n(Demo key: student-api-secret-key-2026)',
-        'student-api-secret-key-2026'
-      );
-      if (entered) {
-        setStoredApiKey(entered);
-        init();
-      }
+      openAuthModal();
     }
   });
 }

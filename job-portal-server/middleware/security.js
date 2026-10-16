@@ -1,69 +1,50 @@
 // ============================================================
-//  middleware/security.js – CORS, Mutation Auth & Recruiter Privacy
+//  middleware/security.js – CORS & Data Sanitization
 // ============================================================
 
-const JOB_ADMIN_KEY = process.env.JOB_ADMIN_KEY || process.env.API_KEY || "job-admin-secret-key-2026";
+const defaultAllowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "http://localhost:4000",
+  "http://localhost:8080",
+  "https://students-portal.onrender.com",
+  "https://job-portal-web.onrender.com",
+  "https://exp-portal-mcp-server.onrender.com"
+];
 
 /**
- * Configure strict CORS allowlist
+ * Configure strict CORS policy (SEC-03: Exact origins, reject '*', credentials: false)
  */
 function getCorsOptions() {
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
-    : [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:3000",
-        "http://localhost:4000",
-        "http://localhost:8080",
-        "https://exp-portal-mcp-server.onrender.com"
-      ];
+  const envOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(",")
+        .map((s) => s.trim())
+        .filter((s) => s && s !== "*") // Strictly reject '*' wildcard
+    : [];
+
+  const allowedOriginsSet = new Set([...defaultAllowedOrigins, ...envOrigins]);
 
   return {
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. curl, mobile, server-to-server)
+      // Calls without Origin (e.g. server-to-server, curl, CLI) are allowed past CORS,
+      // but protected operations still require Authorization: Bearer <token>.
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+
+      if (allowedOriginsSet.has(origin)) {
         return callback(null, true);
       }
-      return callback(new Error(`CORS policy violation: origin '${origin}' is not in allowed origins.`));
+      // Unconfigured browser origins do NOT receive CORS headers
+      return callback(null, false);
     },
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
-    credentials: true
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: false
   };
 }
 
 /**
- * Check if request carries valid Job Admin / Recruiter credentials
- */
-function isAuthorized(req) {
-  const apiKey =
-    req.headers["x-api-key"] ||
-    (req.headers["authorization"]?.startsWith("Bearer ")
-      ? req.headers["authorization"].slice(7)
-      : null) ||
-    req.query.apiKey;
-
-  return Boolean(apiKey && apiKey === JOB_ADMIN_KEY);
-}
-
-/**
- * Enforce authentication for mutation endpoints (POST, DELETE)
- */
-function requireAuth(req, res, next) {
-  if (!isAuthorized(req)) {
-    return res.status(401).json({
-      success: false,
-      error: "Unauthorized",
-      message: "Authentication required to perform mutations on job postings. Provide a valid API key via 'X-API-Key' or 'Authorization: Bearer <key>'."
-    });
-  }
-  next();
-}
-
-/**
- * Sanitize job postings to minimize recruiter personal contact exposure
+ * Sanitize job postings (SEC-02 is excluded per user instruction, preserving current behavior)
  */
 function sanitizeJob(job, authorized = false) {
   if (!job) return job;
@@ -96,9 +77,6 @@ function sanitizeJob(job, authorized = false) {
 }
 
 module.exports = {
-  JOB_ADMIN_KEY,
   getCorsOptions,
-  isAuthorized,
-  requireAuth,
   sanitizeJob
 };

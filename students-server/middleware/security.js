@@ -1,65 +1,45 @@
 // ============================================================
-//  middleware/security.js – CORS, Auth & Data Minimization
+//  middleware/security.js – CORS & Student Data Formatting
 // ============================================================
 
-const STUDENT_API_KEY = process.env.STUDENT_API_KEY || "student-api-secret-key-2026";
+const defaultAllowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "http://localhost:4000",
+  "http://localhost:8080",
+  "https://students-portal.onrender.com",
+  "https://job-portal-web.onrender.com",
+  "https://exp-portal-mcp-server.onrender.com"
+];
 
 /**
- * Configure strict CORS allowlist
+ * Configure strict CORS allowlist (SEC-03: Exact origins, reject '*', credentials: false)
  */
 function getCorsOptions() {
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
-    : [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:3000",
-        "http://localhost:4000",
-        "http://localhost:8080",
-        "https://exp-portal-mcp-server.onrender.com"
-      ];
+  const envOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(",")
+        .map((s) => s.trim())
+        .filter((s) => s && s !== "*") // Reject '*'
+    : [];
+
+  const allowedOriginsSet = new Set([...defaultAllowedOrigins, ...envOrigins]);
 
   return {
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
+      // Calls without Origin (e.g. curl, server-to-server) pass CORS check,
+      // but protected operations still require Authorization: Bearer <token>.
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+
+      if (allowedOriginsSet.has(origin)) {
         return callback(null, true);
       }
-      return callback(new Error(`CORS policy violation: origin '${origin}' is not in allowed origins.`));
+      return callback(null, false);
     },
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
-    credentials: true
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: false
   };
-}
-
-/**
- * Check if request has valid Student API credentials
- */
-function isAuthorized(req) {
-  const apiKey =
-    req.headers["x-api-key"] ||
-    (req.headers["authorization"]?.startsWith("Bearer ")
-      ? req.headers["authorization"].slice(7)
-      : null) ||
-    req.query.apiKey;
-
-  return Boolean(apiKey && apiKey === STUDENT_API_KEY);
-}
-
-/**
- * Middleware that requires authentication
- */
-function requireAuth(req, res, next) {
-  if (!isAuthorized(req)) {
-    return res.status(401).json({
-      success: false,
-      error: "Unauthorized",
-      message: "Authentication required to access protected student data. Provide a valid API key via 'X-API-Key' or 'Authorization: Bearer <key>'."
-    });
-  }
-  next();
 }
 
 /**
@@ -93,6 +73,7 @@ function maskMobile(mobile) {
 
 /**
  * Format student record based on authorization status
+ * (SEC-04 is excluded per user instruction, preserving current formatting)
  */
 function formatStudent(student, authorized = false) {
   if (authorized) {
@@ -111,10 +92,7 @@ function formatStudent(student, authorized = false) {
 }
 
 module.exports = {
-  STUDENT_API_KEY,
   getCorsOptions,
-  isAuthorized,
-  requireAuth,
   maskEmail,
   maskMobile,
   formatStudent
