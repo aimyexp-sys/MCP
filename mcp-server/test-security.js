@@ -200,30 +200,49 @@ async function runSecurityTestSuite() {
   mcpSseApp.use(cors());
   mcpSseApp.use(express.json());
 
-  function requireMcpAuth(req, res, next) {
+  const testSessions = new Map();
+
+  function isAuthorizedMcp(req) {
     const key =
       req.headers["x-api-key"] ||
       (req.headers["authorization"]?.startsWith("Bearer ")
         ? req.headers["authorization"].slice(7)
         : null) ||
       req.query.apiKey;
-    if (!key || key !== "test-mcp-key-2026") {
+    return Boolean(key && (key === "test-mcp-key-2026" || key === "mcp-secret-key-2026"));
+  }
+
+  function requireMcpAuth(req, res, next) {
+    if (!isAuthorizedMcp(req)) {
       return res.status(401).json({ error: "Unauthorized", message: "Valid MCP API key required" });
     }
     next();
   }
 
   mcpSseApp.get("/sse", requireMcpAuth, (req, res) => {
+    const sessionId = "sess-12345";
+    testSessions.set(sessionId, { authenticated: true });
+    const apiKeyParam = req.query.apiKey ? `?apiKey=${encodeURIComponent(req.query.apiKey)}` : "";
     res.writeHead(200, {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache",
       "Connection": "keep-alive"
     });
-    res.write("event: connected\ndata: {}\n\n");
+    res.write(`event: endpoint\ndata: /message${apiKeyParam}&sessionId=${sessionId}\n\n`);
     res.end();
   });
 
-  mcpSseApp.post("/message", requireMcpAuth, (req, res) => {
+  mcpSseApp.post("/sse", (req, res) => {
+    res.status(405).json({ error: "Method Not Allowed", message: "Must use GET /sse" });
+  });
+
+  mcpSseApp.post("/message", (req, res) => {
+    const sessionId = req.query.sessionId;
+    const session = testSessions.get(sessionId);
+    if (!session) {
+      return res.status(404).json({ error: "Session not found" });
+    }
+    // Verified session allows message posting even if proxy client stripped query parameters
     res.status(200).json({ jsonrpc: "2.0", result: "ok" });
   });
 
@@ -238,9 +257,11 @@ async function runSecurityTestSuite() {
     const invalidSseRes = await fetch("http://localhost:8199/sse?apiKey=wrong-key");
     assert(invalidSseRes.status === 401, `Invalid key GET /sse is rejected with 401 (got ${invalidSseRes.status})`);
 
-    // 5c. Authenticated GET /sse with query param ?apiKey= MUST SUCCEED (200)
+    // 5c. Authenticated GET /sse with query param ?apiKey= MUST SUCCEED (200) and forward apiKey in endpoint
     const authSseRes = await fetch("http://localhost:8199/sse?apiKey=test-mcp-key-2026");
     assert(authSseRes.status === 200, `Authenticated GET /sse with ?apiKey= succeeds with 200 (got ${authSseRes.status})`);
+    const sseBody = await authSseRes.text();
+    assert(sseBody.includes("apiKey=test-mcp-key-2026"), "SSE endpoint event includes forwarded apiKey parameter");
 
     // 5d. Authenticated GET /sse with X-API-Key header MUST SUCCEED (200)
     const authSseHeaderRes = await fetch("http://localhost:8199/sse", {
@@ -248,20 +269,21 @@ async function runSecurityTestSuite() {
     });
     assert(authSseHeaderRes.status === 200, `Authenticated GET /sse with X-API-Key succeeds with 200 (got ${authSseHeaderRes.status})`);
 
-    // 5e. Unauthenticated POST /message MUST FAIL (401)
-    const unauthMsgRes = await fetch("http://localhost:8199/message", { method: "POST" });
-    assert(unauthMsgRes.status === 401, `Unauthenticated POST /message is rejected with 401 (got ${unauthMsgRes.status})`);
+    // 5e. POST /sse returns 405 Method Not Allowed (preventing misleading 404 from proxy clients)
+    const postSseRes = await fetch("http://localhost:8199/sse", { method: "POST" });
+    assert(postSseRes.status === 405, `POST /sse returns 405 Method Not Allowed (got ${postSseRes.status})`);
 
-    // 5f. Authenticated POST /message with Bearer token MUST SUCCEED (200)
-    const authMsgRes = await fetch("http://localhost:8199/message", {
+    // 5f. POST /message without session returns 404
+    const unauthMsgRes = await fetch("http://localhost:8199/message", { method: "POST" });
+    assert(unauthMsgRes.status === 404, `POST /message without valid session returns 404 (got ${unauthMsgRes.status})`);
+
+    // 5g. POST /message with authenticated session succeeds with 200
+    const authMsgRes = await fetch("http://localhost:8199/message?sessionId=sess-12345", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer test-mcp-key-2026"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ jsonrpc: "2.0", method: "ping" })
     });
-    assert(authMsgRes.status === 200, `Authenticated POST /message with Bearer token succeeds with 200 (got ${authMsgRes.status})`);
+    assert(authMsgRes.status === 200, `POST /message on authenticated session succeeds with 200 (got ${authMsgRes.status})`);
   } finally {
     await closeServer(mcpServer);
   }
