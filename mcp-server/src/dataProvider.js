@@ -14,8 +14,22 @@ let cachedStudents = null;
 let cachedTechStacks = null;
 let cachedJobs = null;
 
-const STUDENTS_API_URL = process.env.STUDENTS_API_URL || "http://localhost:3000/api/students";
-const JOBS_API_URL = process.env.JOBS_API_URL || "http://localhost:4000/api/jobs";
+function formatEndpointUrl(envUrl, defaultPath, defaultPort) {
+  if (!envUrl) return `http://localhost:${defaultPort}${defaultPath}`;
+  let clean = envUrl.trim();
+  if (!clean.startsWith("http://") && !clean.startsWith("https://")) {
+    clean = clean.includes("localhost") || (clean.includes(":") && !clean.includes(".onrender.com"))
+      ? `http://${clean}`
+      : `https://${clean}`;
+  }
+  if (!clean.includes(defaultPath)) {
+    clean = clean.replace(/\/+$/, "") + defaultPath;
+  }
+  return clean;
+}
+
+const STUDENTS_API_URL = formatEndpointUrl(process.env.STUDENTS_API_URL, "/api/students", 3000);
+const JOBS_API_URL = formatEndpointUrl(process.env.JOBS_API_URL, "/api/jobs", 4000);
 
 /**
  * Helper to mask student emails for privacy protection

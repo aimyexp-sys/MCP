@@ -143,7 +143,7 @@ app.post("/sse", async (req, res) => {
   const sessionId = req.query.sessionId;
   const session = sessionId ? sessions.get(sessionId) : null;
   if (session) {
-    return await session.transport.handlePostMessage(req, res);
+    return await session.transport.handlePostMessage(req, res, req.body);
   }
   return res.status(405).json({
     error: "Method Not Allowed",
@@ -171,7 +171,7 @@ app.post("/message", async (req, res) => {
     return res.status(401).json({ error: "Unauthorized", message: "Session unauthenticated" });
   }
 
-  await session.transport.handlePostMessage(req, res);
+  await session.transport.handlePostMessage(req, res, req.body);
 });
 
 app.listen(PORT, () => {
