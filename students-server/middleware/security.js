@@ -34,6 +34,22 @@ function getCorsOptions() {
       if (allowedOriginsSet.has(origin)) {
         return callback(null, true);
       }
+
+      // Automatically support Render deployment instance domains (e.g. https://students-portal-m616.onrender.com)
+      try {
+        const url = new URL(origin);
+        if (
+          url.hostname.endsWith(".onrender.com") &&
+          (url.hostname.startsWith("students-portal") ||
+           url.hostname.startsWith("job-portal-web") ||
+           url.hostname.startsWith("exp-portal-mcp-server") ||
+           url.hostname.startsWith("job-portal-server") ||
+           url.hostname.startsWith("students-server"))
+        ) {
+          return callback(null, true);
+        }
+      } catch (e) {}
+
       return callback(null, false);
     },
     methods: ["GET", "POST", "OPTIONS"],

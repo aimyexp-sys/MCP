@@ -42,6 +42,21 @@ const corsOptions = {
     if (allowedOriginsSet.has(origin)) {
       return callback(null, true);
     }
+
+    try {
+      const url = new URL(origin);
+      if (
+        url.hostname.endsWith(".onrender.com") &&
+        (url.hostname.startsWith("students-portal") ||
+         url.hostname.startsWith("job-portal-web") ||
+         url.hostname.startsWith("exp-portal-mcp-server") ||
+         url.hostname.startsWith("job-portal-server") ||
+         url.hostname.startsWith("students-server"))
+      ) {
+        return callback(null, true);
+      }
+    } catch (e) {}
+
     // Unconfigured browser origins do NOT receive CORS headers
     return callback(null, false);
   },

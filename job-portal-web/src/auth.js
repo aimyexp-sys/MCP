@@ -101,6 +101,15 @@ export async function loginWithAuth0() {
 
 export async function handleAuthCallback() {
   const urlParams = new URLSearchParams(window.location.search);
+  const error = urlParams.get('error');
+  if (error) {
+    const errorDesc = urlParams.get('error_description') || error;
+    console.warn('[auth0] Authorization error from Auth0:', error, errorDesc);
+    window.history.replaceState({}, document.title, window.location.pathname);
+    alert(`Auth0 Sign-in Error: ${errorDesc}\n\nHint: If you see "Service not found", create an API in Auth0 Dashboard (Applications > APIs) with Identifier matching your audience.`);
+    return false;
+  }
+
   const code = urlParams.get('code');
   if (!code) return false;
 

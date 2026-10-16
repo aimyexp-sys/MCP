@@ -89,7 +89,12 @@ export default function App() {
 
   function getApiBase() {
     let url = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000/api' : '/api');
-    if (!url.startsWith('http') && !url.startsWith('/')) url = `https://${url}`;
+    if (!url.startsWith('http') && !url.startsWith('/')) {
+      if (!url.includes('.')) {
+        url = `${url}.onrender.com`;
+      }
+      url = `https://${url}`;
+    }
     if (!url.endsWith('/api') && url.startsWith('http')) url = `${url.replace(/\/$/, '')}/api`;
     return url;
   }
