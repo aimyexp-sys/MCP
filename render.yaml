@@ -96,7 +96,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: MCP_API_KEY
-        generateValue: true
+        value: mcp-secret-key-2026
       - key: ALLOWED_ORIGINS
         value: "*"
       - key: STUDENTS_API_URL
