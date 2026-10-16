@@ -10,7 +10,9 @@
   "scripts": {
     "start": "node src/index.js",
     "start:sse": "node src/sse.js",
-    "test:tools": "node test-mcp.js"
+    "test:tools": "node test-mcp.js",
+    "test:security": "node test-security.js",
+    "test": "node test-mcp.js && node test-security.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",

@@ -5,12 +5,31 @@
 const express = require("express");
 const router = express.Router();
 let jobs = require("../data/jobs");
+const { requireAuth, isAuthorized, sanitizeJob } = require("../middleware/security");
+
+// ────────────────────────────────────────────────────────────
+// GET /api/jobs/auth/status
+//   Check authentication state and mutation privileges
+// ────────────────────────────────────────────────────────────
+router.get("/auth/status", (req, res) => {
+  const authorized = isAuthorized(req);
+  res.status(200).json({
+    success: true,
+    authenticated: authorized,
+    role: authorized ? "employer/admin" : "public",
+    canMutateJobs: authorized,
+    recruiterPrivacyStatus: authorized
+      ? "Full recruiter contact details accessible."
+      : "Recruiter personal phone numbers and direct contact names are masked for privacy protection."
+  });
+});
 
 // ── GET /api/jobs ─────────────────────────────────────────────
 // Returns the complete list of all 100 job postings in a single request.
 // Also supports optional filtering via query parameters.
 router.get("/", (req, res) => {
   try {
+    const authorized = isAuthorized(req);
     const { category, techStack, search, jobType, experienceLevel, location, limit, page } = req.query;
 
     let filtered = [...jobs];
@@ -61,7 +80,7 @@ router.get("/", (req, res) => {
       const p = Math.max(1, parseInt(page, 10));
       const l = Math.max(1, parseInt(limit, 10));
       const startIndex = (p - 1) * l;
-      const paginatedData = filtered.slice(startIndex, startIndex + l);
+      const paginatedData = filtered.slice(startIndex, startIndex + l).map(j => sanitizeJob(j, authorized));
 
       return res.status(200).json({
         success: true,
@@ -71,17 +90,30 @@ router.get("/", (req, res) => {
         limit: l,
         totalPages: Math.ceil(filtered.length / l),
         count: paginatedData.length,
+        privacy: {
+          recruiterContactMasked: !authorized,
+          notice: authorized
+            ? "Authenticated session: full recruiter contact details provided."
+            : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+        },
         data: paginatedData
       });
     }
 
     // Default: returns complete list (all 100 postings) in a single request
+    const sanitizedAll = filtered.map(j => sanitizeJob(j, authorized));
     return res.status(200).json({
       success: true,
       message: "Complete list of all job postings retrieved successfully",
       total: jobs.length,
-      count: filtered.length,
-      data: filtered
+      count: sanitizedAll.length,
+      privacy: {
+        recruiterContactMasked: !authorized,
+        notice: authorized
+          ? "Authenticated session: full recruiter contact details provided."
+          : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+      },
+      data: sanitizedAll
     });
   } catch (err) {
     return res.status(500).json({
@@ -138,6 +170,7 @@ router.get("/categories", (req, res) => {
 // Returns all jobs for a specific tech stack category
 router.get("/category/:categoryName", (req, res) => {
   const { categoryName } = req.params;
+  const authorized = isAuthorized(req);
   const matched = jobs.filter(job =>
     job.category.toLowerCase() === categoryName.toLowerCase() ||
     job.techStack.toLowerCase() === categoryName.toLowerCase()
@@ -151,11 +184,18 @@ router.get("/category/:categoryName", (req, res) => {
     });
   }
 
+  const sanitized = matched.map(j => sanitizeJob(j, authorized));
   return res.status(200).json({
     success: true,
     category: categoryName,
-    count: matched.length,
-    data: matched
+    count: sanitized.length,
+    privacy: {
+      recruiterContactMasked: !authorized,
+      notice: authorized
+        ? "Authenticated session: full recruiter contact details provided."
+        : "Recruiter personal contact info masked."
+    },
+    data: sanitized
   });
 });
 
@@ -163,6 +203,7 @@ router.get("/category/:categoryName", (req, res) => {
 // Returns a single job posting by ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
+  const authorized = isAuthorized(req);
   const job = jobs.find(j => j.id.toLowerCase() === id.toLowerCase());
 
   if (!job) {
@@ -175,13 +216,19 @@ router.get("/:id", (req, res) => {
 
   return res.status(200).json({
     success: true,
-    data: job
+    privacy: {
+      recruiterContactMasked: !authorized,
+      notice: authorized
+        ? "Authenticated session: full recruiter contact details provided."
+        : "Recruiter personal phone numbers and direct contact names are masked. Provide X-API-Key or Authorization header for unmasked access."
+    },
+    data: sanitizeJob(job, authorized)
   });
 });
 
 // ── POST /api/jobs ────────────────────────────────────────────
-// Create a new job vacancy posting
-router.post("/", (req, res) => {
+// Create a new job vacancy posting [Protected: requires valid API key]
+router.post("/", requireAuth, (req, res) => {
   const {
     title,
     category,
@@ -245,7 +292,8 @@ router.post("/", (req, res) => {
 });
 
 // ── DELETE /api/jobs/:id ──────────────────────────────────────
-router.delete("/:id", (req, res) => {
+// Delete a job vacancy posting [Protected: requires valid API key]
+router.delete("/:id", requireAuth, (req, res) => {
   const { id } = req.params;
   const index = jobs.findIndex(j => j.id.toLowerCase() === id.toLowerCase());
 

@@ -14,6 +14,10 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
+      - key: STUDENT_API_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"
 
   # -------------------------------------------------------------
   # 2. Student Directory Portal Frontend
@@ -50,6 +54,10 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
+      - key: JOB_ADMIN_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"
 
   # -------------------------------------------------------------
   # 4. Job Vacancies Web App Frontend
@@ -87,6 +95,10 @@ services:
         value: 10000
       - key: NODE_ENV
         value: production
+      - key: MCP_API_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"
       - key: STUDENTS_API_URL
         fromService:
           type: web
@@ -97,3 +109,13 @@ services:
           type: web
           name: job-portal-server
           property: host
+      - key: STUDENT_API_KEY
+        fromService:
+          type: web
+          name: students-server
+          envVarKey: STUDENT_API_KEY
+      - key: JOB_ADMIN_KEY
+        fromService:
+          type: web
+          name: job-portal-server
+          envVarKey: JOB_ADMIN_KEY

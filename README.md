@@ -279,15 +279,60 @@ This repository includes a ready-to-use **Render Blueprint** (`render.yaml`) tha
 
 ### Method 2: Connecting Claude Desktop to Deployed Render MCP
 
-Once deployed, your MCP server runs on HTTP / Server-Sent Events (SSE). You can connect to it remotely from anywhere:
+Once deployed, your MCP server runs on HTTP / Server-Sent Events (SSE) protected by API Key authentication:
 
 ```json
 {
   "mcpServers": {
     "exp_portal-mcp-server": {
-      "url": "https://exp-portal-mcp-server.onrender.com/sse"
+      "url": "https://exp-portal-mcp-server.onrender.com/sse?apiKey=mcp-secret-key-2026"
     }
   }
 }
 ```
-*(Replace `https://exp-portal-mcp-server.onrender.com` with your actual Render service URL).*
+*(Replace `https://exp-portal-mcp-server.onrender.com` with your actual Render service URL and use your configured `MCP_API_KEY`).*
+
+---
+
+## 🔐 Security, Authentication & Data Privacy
+
+This project implements strict access controls, CORS restrictions, and personal data minimization:
+
+### 1. Authentication & Mutation Controls
+- **Job Posting Mutations**:
+  - Creating (`POST /api/jobs`) and deleting (`DELETE /api/jobs/:id`) vacancies requires authentication.
+  - Unauthenticated requests are rejected with `401 Unauthorized`.
+  - Configurable via `JOB_ADMIN_KEY` (Default: `job-admin-secret-key-2026`).
+  - Auth header: `X-API-Key: <key>` or `Authorization: Bearer <key>`.
+- **Hosted MCP Endpoint Security**:
+  - The hosted HTTP/SSE transport (`/sse`, `/message`) enforces authentication.
+  - Accepts `X-API-Key` header, `Authorization: Bearer <key>`, or `?apiKey=<key>` query parameter.
+  - Configurable via `MCP_API_KEY` (Default: `mcp-secret-key-2026`).
+- **Student API Access Control**:
+  - Configurable via `STUDENT_API_KEY` (Default: `student-api-secret-key-2026`).
+  - Public requests receive privacy-masked records. Authorized recruiters/admins unlock unmasked contacts.
+
+### 2. Personal Data Minimization (Privacy Shield)
+- **Student Contacts**:
+  - Student emails (e.g. `aa***5@outlook.com`) and mobile numbers (e.g. `+91 77*****113`) are masked by default on public endpoints and in `get_students` MCP tool output.
+  - Full details are only accessible to authorized consumers supplying valid credentials.
+- **Recruiter Contacts**:
+  - Recruiter personal phone numbers and direct personal names are protected on public endpoints and in `get_jobs` MCP tool output.
+  - Public listings provide company careers email and website, keeping recruiter personal numbers private.
+
+### 3. Strict CORS Policies
+- Wildcard CORS (`*`) is restricted.
+- All services enforce strict origin allowlists configurable via `ALLOWED_ORIGINS` (comma-separated origins).
+- Preflight `OPTIONS` and standard allowed headers (`Content-Type`, `Authorization`, `X-API-Key`) are supported.
+
+### 4. Running the Security Test Suite
+Run the end-to-end automated security verification:
+
+```bash
+npm run test:security
+```
+Or run the full test suite (tools + security):
+```bash
+npm test
+```
+

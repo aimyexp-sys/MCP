@@ -9,23 +9,31 @@ const morgan  = require("morgan");
 const studentRoutes = require("./routes/students");
 const statsRoutes   = require("./routes/stats");
 
+const { getCorsOptions, isAuthorized } = require("./middleware/security");
+
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ───────────────────────────────────────────────
-app.use(cors());
+app.use(cors(getCorsOptions()));
 app.use(morgan("dev"));
 app.use(express.json());
 
-// ── Health Check ─────────────────────────────────────────────
+// ── Health Check & API Directory ─────────────────────────────
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "🎓 Student API Server is running!",
     version: "1.0.0",
+    security: {
+      authHeader: "X-API-Key or Authorization: Bearer <key>",
+      authenticated: isAuthorized(req),
+      privacyPolicy: "Personal student contact details (email, mobile) are masked on unauthenticated requests."
+    },
     endpoints: {
-      "GET /api/students":                   "Fetch all students (supports ?page, ?limit, ?stack, ?search)",
-      "GET /api/students/:id":               "Fetch a single student by ID",
+      "GET /api/students":                   "Fetch all students (masked unless authenticated; supports ?page, ?limit, ?stack, ?search)",
+      "GET /api/students/:id":               "Fetch a single student by ID (masked unless authenticated)",
       "GET /api/students/stack/:stackName":  "Fetch students by tech stack (MERN | MEAN | Python | Android | iOS)",
+      "GET /api/students/auth/status":       "Check your current authentication status",
       "GET /api/stats":                      "Get aggregate statistics by tech stack",
     },
   });

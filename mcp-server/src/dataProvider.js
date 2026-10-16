@@ -18,6 +18,33 @@ const STUDENTS_API_URL = process.env.STUDENTS_API_URL || "http://localhost:3000/
 const JOBS_API_URL = process.env.JOBS_API_URL || "http://localhost:4000/api/jobs";
 
 /**
+ * Helper to mask student emails for privacy protection
+ */
+export function maskEmail(email) {
+  if (!email || !email.includes("@")) return "***@***.com";
+  const [user, domain] = email.split("@");
+  if (user.length <= 2) {
+    return `${user[0]}***@${domain}`;
+  }
+  return `${user.slice(0, 2)}***${user.slice(-1)}@${domain}`;
+}
+
+/**
+ * Helper to mask student mobile numbers for privacy protection
+ */
+export function maskMobile(mobile) {
+  if (!mobile) return "+91 **********";
+  const clean = mobile.trim();
+  if (clean.length > 7) {
+    const spaceIdx = clean.indexOf(" ");
+    const prefix = spaceIdx !== -1 ? clean.slice(0, spaceIdx + 3) : clean.slice(0, 5);
+    const suffix = clean.slice(-3);
+    return `${prefix}*****${suffix}`;
+  }
+  return "+91 **********";
+}
+
+/**
  * Load student records.
  * First tries to fetch live data from the running Student API (STUDENTS_API_URL)
  * to ensure 100% real-time synchronization with the Web Portal.
@@ -27,7 +54,11 @@ export async function getStudentsData() {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
-    const res = await fetch(STUDENTS_API_URL, { signal: controller.signal });
+    const headers = {};
+    if (process.env.STUDENT_API_KEY) {
+      headers["X-API-Key"] = process.env.STUDENT_API_KEY;
+    }
+    const res = await fetch(STUDENTS_API_URL, { signal: controller.signal, headers });
     clearTimeout(timeoutId);
     if (res.ok) {
       const json = await res.json();
@@ -58,7 +89,11 @@ export async function getJobsData() {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 800);
-    const res = await fetch(JOBS_API_URL, { signal: controller.signal });
+    const headers = {};
+    if (process.env.JOB_ADMIN_KEY) {
+      headers["X-API-Key"] = process.env.JOB_ADMIN_KEY;
+    }
+    const res = await fetch(JOBS_API_URL, { signal: controller.signal, headers });
     clearTimeout(timeoutId);
     if (res.ok) {
       const json = await res.json();
@@ -102,6 +137,7 @@ export async function queryStudents(filters = {}) {
       returnedCount: student ? 1 : 0,
       offset: 0,
       limit: 1,
+      privacyNotice: "Personal student contact details (email, mobile) are masked for privacy protection.",
       filtersApplied: { student_id },
       students: student ? [formatStudent(student)] : []
     };
@@ -157,13 +193,13 @@ export async function queryStudents(filters = {}) {
         return true;
       }
 
-      // 2. All tokens present across name, email, or skills (e.g. "Aarav Garg")
+      // 2. All tokens present across name, email, or skills
       const allTokensMatch = tokens.every(
         (t) => name.includes(t) || email.includes(t) || skillsText.includes(t)
       );
       if (allTokensMatch) return true;
 
-      // 3. Any prominent token matches name (e.g. if searching "Aarav Garg" when only "Aarav" matches)
+      // 3. Any prominent token matches name
       const tokenMatchesName = tokens.some((t) => t.length >= 3 && name.includes(t));
       return tokenMatchesName;
     });
@@ -177,6 +213,7 @@ export async function queryStudents(filters = {}) {
     returnedCount: paginated.length,
     offset,
     limit,
+    privacyNotice: "Personal student contact details (email, mobile) are masked for privacy protection.",
     filtersApplied: {
       search: search || null,
       tech_stack: tech_stack || null,
@@ -212,8 +249,9 @@ export async function queryJobs(filters = {}) {
       returnedCount: job ? 1 : 0,
       offset: 0,
       limit: 1,
+      privacyNotice: "Recruiter personal phone numbers and direct contact names are masked for privacy protection.",
       filtersApplied: { job_id },
-      jobs: job ? [job] : []
+      jobs: job ? [formatJob(job)] : []
     };
   }
 
@@ -284,13 +322,14 @@ export async function queryJobs(filters = {}) {
   }
 
   const totalMatching = results.length;
-  const paginated = results.slice(offset, offset + limit);
+  const paginated = results.slice(offset, offset + limit).map(formatJob);
 
   return {
     totalMatching,
     returnedCount: paginated.length,
     offset,
     limit,
+    privacyNotice: "Recruiter personal phone numbers and direct contact names are masked for privacy protection.",
     filtersApplied: {
       search: search || null,
       tech_stack: tech_stack || null,
@@ -303,15 +342,20 @@ export async function queryJobs(filters = {}) {
 }
 
 /**
- * Standardize student format for clean LLM consumption
+ * Standardize student format for clean LLM consumption with privacy minimization
  */
 function formatStudent(s) {
+  // If student record came from an authenticated API with unmasked email, mask it for MCP output
+  const rawEmail = s.email || s.contact?.email || "";
+  const rawMobile = s.mobile || s.contact?.mobile || "";
+
   return {
     id: s.id,
     name: s.name,
     contact: {
-      email: s.email,
-      mobile: s.mobile
+      email: maskEmail(rawEmail),
+      mobile: maskMobile(rawMobile),
+      isPersonalDataMasked: true
     },
     academics: {
       enrolledYear: s.enrolledYear,
@@ -323,5 +367,30 @@ function formatStudent(s) {
       proficiencyLevel: ts.proficiencyLevel,
       subSkills: ts.subSkills
     })) || []
+  };
+}
+
+/**
+ * Sanitize job record to protect recruiter personal contacts
+ */
+function formatJob(j) {
+  if (!j) return j;
+  const company = j.company || {};
+  const contact = company.contact || {};
+
+  return {
+    ...j,
+    company: {
+      ...company,
+      contact: {
+        ...contact,
+        hrContactPerson: "Hiring Team [Protected - Apply via portal]",
+        phone: "[Protected - Verified Employers Only]",
+        email: contact.email || `careers@${(company.name || "company").toLowerCase().replace(/[^a-z0-9]/g, "")}.com`,
+        website: contact.website || "https://example.com",
+        address: contact.address || j.location || "Remote"
+      }
+    },
+    isRecruiterContactMasked: true
   };
 }

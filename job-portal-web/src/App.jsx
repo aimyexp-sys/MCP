@@ -18,7 +18,10 @@ import {
   Layers, 
   Filter, 
   PlusCircle,
-  Share2
+  Share2,
+  ShieldCheck,
+  ShieldAlert,
+  Trash2
 } from 'lucide-react';
 import { fallbackJobs } from './data/fallbackJobs';
 import './App.css';
@@ -28,6 +31,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [apiConnected, setApiConnected] = useState(false);
   const [theme, setTheme] = useState('dark');
+  const [adminApiKey, setAdminApiKey] = useState(() => sessionStorage.getItem('job_admin_key') || '');
 
   // Filter States
   const [selectedStack, setSelectedStack] = useState('All');
@@ -60,15 +64,22 @@ export default function App() {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
-  // Fetch Jobs from backend API (with fallback)
+  function getApiBase() {
+    let url = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000/api' : '/api');
+    if (!url.startsWith('http') && !url.startsWith('/')) url = `https://${url}`;
+    if (!url.endsWith('/api') && url.startsWith('http')) url = `${url.replace(/\/$/, '')}/api`;
+    return url;
+  }
+
+  // Fetch Jobs from backend API (with auth headers if configured)
   useEffect(() => {
     async function fetchJobs() {
       setLoading(true);
-      let API_BASE = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:4000/api' : '/api');
-      if (!API_BASE.startsWith('http') && !API_BASE.startsWith('/')) API_BASE = `https://${API_BASE}`;
-      if (!API_BASE.endsWith('/api') && API_BASE.startsWith('http')) API_BASE = `${API_BASE.replace(/\/$/, '')}/api`;
+      const API_BASE = getApiBase();
+      const headers = adminApiKey ? { 'X-API-Key': adminApiKey } : {};
+
       try {
-        const res = await fetch(`${API_BASE}/jobs`);
+        const res = await fetch(`${API_BASE}/jobs`, { headers });
         if (res.ok) {
           const data = await res.json();
           const jobList = Array.isArray(data) ? data : (data && data.data);
@@ -83,7 +94,7 @@ export default function App() {
       } catch (err) {
         // Try direct fetch to port 4000 in case proxy isn't routing
         try {
-          const directRes = await fetch('http://localhost:4000/api/jobs');
+          const directRes = await fetch('http://localhost:4000/api/jobs', { headers });
           if (directRes.ok) {
             const data = await directRes.json();
             if (data && data.data) {
@@ -103,7 +114,7 @@ export default function App() {
     }
 
     fetchJobs();
-  }, []);
+  }, [adminApiKey]);
 
   // Compute category counts
   const categoryCounts = useMemo(() => {
@@ -209,6 +220,34 @@ export default function App() {
             <span className="status-dot"></span>
             {apiConnected ? 'API Connected (Port 4000)' : 'Live Demo Data (100 Jobs)'}
           </div>
+
+          <button 
+            className="btn-secondary" 
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', padding: '0.45rem 0.85rem' }}
+            onClick={() => {
+              if (adminApiKey) {
+                if (confirm('Sign out of Admin / Employer mode to switch back to privacy-masked contacts?')) {
+                  setAdminApiKey('');
+                  sessionStorage.removeItem('job_admin_key');
+                }
+              } else {
+                const key = prompt(
+                  'Enter Employer / Admin API Key to unlock full recruiter contacts and vacancy mutations:\n(Demo key: job-admin-secret-key-2026)',
+                  'job-admin-secret-key-2026'
+                );
+                if (key) {
+                  const clean = key.trim();
+                  setAdminApiKey(clean);
+                  sessionStorage.setItem('job_admin_key', clean);
+                }
+              }
+            }}
+            title={adminApiKey ? "Authenticated Employer/Admin. Click to sign out." : "Authenticate as Employer/Admin"}
+            id="auth-toggle-btn"
+          >
+            {adminApiKey ? <ShieldCheck size={16} color="#10b981" /> : <ShieldAlert size={16} />}
+            <span>{adminApiKey ? 'Admin Unlocked' : 'Masked Mode'}</span>
+          </button>
 
           <button 
             className="icon-button" 
@@ -480,8 +519,13 @@ export default function App() {
             </div>
 
             {/* Company Contact Card */}
-            <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
-              Company & Contact Details
+            <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span>Company & Contact Details</span>
+              {activeJobModal.isRecruiterContactMasked ? (
+                <span style={{ color: '#f59e0b', fontSize: '0.75rem', fontWeight: 600 }}>🔒 Contact Masked (Public)</span>
+              ) : (
+                <span style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: 600 }}>🔓 Verified Recruiter Contact</span>
+              )}
             </h4>
             <div className="company-contact-card">
               <div>
@@ -544,10 +588,10 @@ export default function App() {
             </div>
 
             {/* Action Bar */}
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
               <button 
                 className="btn-primary" 
-                style={{ flex: 1, justifyContent: 'center' }}
+                style={{ flex: 2, minWidth: '160px', justifyContent: 'center' }}
                 onClick={() => {
                   const jobToApply = activeJobModal;
                   setActiveJobModal(null);
@@ -566,6 +610,35 @@ export default function App() {
               >
                 <Share2 size={16} /> Share
               </button>
+              {adminApiKey && (
+                <button 
+                  className="btn-secondary"
+                  style={{ color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.4)' }}
+                  onClick={async () => {
+                    if (!confirm(`Are you sure you want to delete job vacancy '${activeJobModal.title}' (${activeJobModal.id})?`)) return;
+                    const API_BASE = getApiBase();
+                    try {
+                      const res = await fetch(`${API_BASE}/jobs/${activeJobModal.id}`, {
+                        method: 'DELETE',
+                        headers: { 'X-API-Key': adminApiKey }
+                      });
+                      if (res.ok) {
+                        setJobs(prev => prev.filter(j => j.id !== activeJobModal.id));
+                        setActiveJobModal(null);
+                        alert(`Job '${activeJobModal.id}' deleted successfully.`);
+                      } else {
+                        const err = await res.json().catch(() => ({}));
+                        alert(`Failed to delete vacancy: ${err.message || 'Unauthorized action'}`);
+                      }
+                    } catch (e) {
+                      alert(`Error connecting to server: ${e.message}`);
+                    }
+                  }}
+                  title="Delete this vacancy posting (Authenticated Admin Action)"
+                >
+                  <Trash2 size={16} /> Delete
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -702,11 +775,13 @@ export default function App() {
               Add a new tech role to the portal. It will immediately appear in the listings.
             </p>
 
-            <form onSubmit={(e) => {
+            <form onSubmit={async (e) => {
               e.preventDefault();
               const form = e.target;
+              const adminKey = form.adminKey.value.trim();
+              const API_BASE = getApiBase();
+
               const newJob = {
-                id: `JOB-${String(jobs.length + 1).padStart(3, '0')}`,
                 title: form.title.value,
                 category: form.techStack.value,
                 techStack: form.techStack.value,
@@ -731,16 +806,60 @@ export default function App() {
                 },
                 jobType: form.jobType.value,
                 location: form.location.value,
-                salary: form.salary.value,
-                postedDate: new Date().toISOString().split('T')[0],
-                applicationDeadline: '2026-12-31',
-                status: 'Active'
+                salary: form.salary.value
               };
 
-              setJobs([newJob, ...jobs]);
-              setIsPostingModal(false);
-              alert(`Job '${newJob.title}' posted successfully!`);
+              try {
+                const res = await fetch(`${API_BASE}/jobs`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-Key': adminKey
+                  },
+                  body: JSON.stringify(newJob)
+                });
+
+                if (res.ok) {
+                  const created = await res.json();
+                  const saved = created.data;
+                  setJobs([saved, ...jobs]);
+                  if (!adminApiKey) {
+                    setAdminApiKey(adminKey);
+                    sessionStorage.setItem('job_admin_key', adminKey);
+                  }
+                  setIsPostingModal(false);
+                  alert(`Job '${saved.title}' posted and authenticated successfully on server!`);
+                } else {
+                  const errData = await res.json().catch(() => ({}));
+                  alert(`Posting rejected by server: ${errData.message || 'Unauthorized API key'}`);
+                }
+              } catch (err) {
+                // Offline fallback
+                const fallbackCreated = {
+                  ...newJob,
+                  id: `JOB-${String(jobs.length + 1).padStart(3, '0')}`,
+                  postedDate: new Date().toISOString().split('T')[0],
+                  applicationDeadline: '2026-12-31',
+                  status: 'Active'
+                };
+                setJobs([fallbackCreated, ...jobs]);
+                setIsPostingModal(false);
+                alert(`Job posted in local offline mode.`);
+              }
             }}>
+              <div className="form-group" style={{ marginBottom: '1rem' }}>
+                <label className="form-label">
+                  Admin / Employer API Key * <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>(Required to authorize posting)</span>
+                </label>
+                <input
+                  name="adminKey"
+                  defaultValue={adminApiKey || "job-admin-secret-key-2026"}
+                  required
+                  className="form-input"
+                  placeholder="e.g. job-admin-secret-key-2026"
+                />
+              </div>
+
               <div className="form-grid-2">
                 <div className="form-group">
                   <label className="form-label">Job Title *</label>
